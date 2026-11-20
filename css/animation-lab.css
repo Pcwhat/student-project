@@ -6,7 +6,7 @@
      - Page Background: #FAF7F2 (Warm Ivory Parchment)
      - Neutral Stone:   #E7E5E4, #D6D3D1, #A8A29E, #78716C
      - Primary Text:    #1C1917 (Deep Charcoal)
-     - Terracotta:      #C2410C, #EA580C, #9A3412, #FDBA74, #FFEDD5
+     - Terracotta:      #C2410C, #EA580C, #9A3412, #FFAB70, #FFEDD5
      - Verified Green:  #22C55E, #15803D, #DCFCE7
    Every preset transforms UI geometry, borders, card architecture, and motion
    while remaining 100% consistent with the website's clean light editorial theme.
@@ -58,7 +58,7 @@ body.anim-preset-1 .academic-meta-bar {
 
 body.anim-preset-1 .masthead-accent-rail {
   height: 2.5px;
-  background: linear-gradient(90deg, #9A3412 0%, #C2410C 25%, #FDBA74 50%, #C2410C 75%, #9A3412 100%);
+  background: linear-gradient(90deg, #9A3412 0%, #C2410C 25%, #FFAB70 50%, #C2410C 75%, #9A3412 100%);
   background-size: 200% 100%;
   animation: v1RailFlow 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
@@ -117,14 +117,14 @@ body.anim-preset-2 .academic-meta-bar {
 
 body.anim-preset-2 .masthead-accent-rail {
   height: 3px;
-  background: repeating-linear-gradient(90deg, #C2410C 0, #C2410C 28px, #FDBA74 28px, #FDBA74 30px);
+  background: repeating-linear-gradient(90deg, #C2410C 0, #C2410C 28px, #FFAB70 28px, #FFAB70 30px);
   background-size: 60px 100%;
 }
 
 body.anim-preset-2 .brand-seal {
   border-radius: 4px;
   background: #C2410C;
-  border: 1px solid #FDBA74;
+  border: 1px solid #FFAB70;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.4),
     0 2px 0 #7C2D12,
@@ -157,7 +157,7 @@ body.anim-preset-2 .academic-chip::before {
 
 body.anim-preset-2 .academic-chip:hover {
   transform: perspective(600px) rotateX(-2deg) translateY(-2px);
-  border-color: #FDBA74;
+  border-color: #FFAB70;
   background: #FFFDF9;
   box-shadow:
     inset 0 1px 0 #FFFFFF,
@@ -251,7 +251,7 @@ body.anim-preset-4 .academic-meta-bar::before {
   left: -20%;
   width: 140px;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(194, 65, 12, 0.08), rgba(251, 146, 60, 0.18), transparent);
+  background: linear-gradient(90deg, transparent, rgba(194, 65, 12, 0.08), rgba(255, 122, 26, 0.18), transparent);
   transform: skewX(-20deg);
   pointer-events: none;
   z-index: 10;
@@ -311,7 +311,7 @@ body.anim-preset-4 .chip-icon {
 
 body.anim-preset-4 .academic-chip:hover {
   background: #FFFDF9;
-  border-color: #FDBA74;
+  border-color: #FFAB70;
   border-left-color: #9A3412;
   transform: translateX(2px) translateY(-1px);
   box-shadow: 0 4px 10px rgba(194, 65, 12, 0.15);
@@ -661,7 +661,7 @@ body.anim-preset-10 .academic-meta-bar {
 
 body.anim-preset-10 .masthead-accent-rail {
   height: 3px;
-  background: linear-gradient(90deg, #C2410C, #FDBA74, #C2410C);
+  background: linear-gradient(90deg, #C2410C, #FFAB70, #C2410C);
   background-size: 200% 100%;
   animation: v10TabRail 5s ease-in-out infinite;
 }
@@ -674,7 +674,7 @@ body.anim-preset-10 .masthead-accent-rail {
 body.anim-preset-10 .brand-seal {
   border-radius: 6px;
   background: #C2410C;
-  border: 1px solid #FDBA74;
+  border: 1px solid #FFAB70;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -772,7 +772,7 @@ body.anim-preset-10 .academic-chip:hover {
   align-items: center;
   padding: 2px 7px;
   background: var(--accent-subtle);
-  border: 1px solid rgba(251, 146, 60, 0.5);
+  border: 1px solid rgba(255, 122, 26, 0.5);
   border-radius: 999px;
   color: var(--accent-subtle-text);
   font-size: 10.5px;

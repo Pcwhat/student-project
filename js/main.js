@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // =========================================================================
   let sharedAudioCtx = null;
   let masterCompressor = null;
+  let cachedNoiseBuffer = null;
   let isSoundEnabled = localStorage.getItem("site_sound_enabled") !== "false";
 
   function setSoundEnabled(enabled) {
@@ -55,39 +56,63 @@ document.addEventListener("DOMContentLoaded", function () {
     } catch (e) {}
   }
 
+  // Instant Audio Pre-Warming (fires on touch/pointerdown 100-300ms before click, eliminating first-click latency)
+  function warmUpAudioContext() {
+    if (!isSoundEnabled) return;
+    try {
+      if (!sharedAudioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          sharedAudioCtx = new AudioContextClass();
+          masterCompressor = sharedAudioCtx.createDynamicsCompressor();
+          masterCompressor.threshold.setValueAtTime(-10, sharedAudioCtx.currentTime);
+          masterCompressor.knee.setValueAtTime(12, sharedAudioCtx.currentTime);
+          masterCompressor.ratio.setValueAtTime(6, sharedAudioCtx.currentTime);
+          masterCompressor.attack.setValueAtTime(0.001, sharedAudioCtx.currentTime);
+          masterCompressor.release.setValueAtTime(0.06, sharedAudioCtx.currentTime);
+          masterCompressor.connect(sharedAudioCtx.destination);
+
+          // Pre-generate shared metallic noise buffer once to avoid per-click buffer allocation
+          const bufSize = Math.max(1, Math.floor(sharedAudioCtx.sampleRate * 0.05));
+          cachedNoiseBuffer = sharedAudioCtx.createBuffer(1, bufSize, sharedAudioCtx.sampleRate);
+          const data = cachedNoiseBuffer.getChannelData(0);
+          for (let i = 0; i < bufSize; i++) {
+            const env = Math.pow(1 - i / bufSize, 2.2);
+            data[i] = (Math.random() * 2 - 1) * env;
+          }
+        }
+      }
+      if (sharedAudioCtx && sharedAudioCtx.state === "suspended") {
+        sharedAudioCtx.resume().catch(function () {});
+      }
+    } catch (err) {}
+  }
+
+  // Attach non-blocking pre-warm listeners immediately
+  window.addEventListener("pointerdown", warmUpAudioContext, { capture: true, passive: true, once: true });
+  window.addEventListener("touchstart", warmUpAudioContext, { capture: true, passive: true, once: true });
+  window.addEventListener("keydown", warmUpAudioContext, { capture: true, passive: true, once: true });
+
   function getAudioOutput() {
     if (!isSoundEnabled) return null;
-    if (!sharedAudioCtx) {
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-      if (AudioContextClass) {
-        sharedAudioCtx = new AudioContextClass();
-        masterCompressor = sharedAudioCtx.createDynamicsCompressor();
-        masterCompressor.threshold.setValueAtTime(-10, sharedAudioCtx.currentTime);
-        masterCompressor.knee.setValueAtTime(12, sharedAudioCtx.currentTime);
-        masterCompressor.ratio.setValueAtTime(6, sharedAudioCtx.currentTime);
-        masterCompressor.attack.setValueAtTime(0.001, sharedAudioCtx.currentTime);
-        masterCompressor.release.setValueAtTime(0.06, sharedAudioCtx.currentTime);
-        masterCompressor.connect(sharedAudioCtx.destination);
-      }
-    }
-    if (sharedAudioCtx && sharedAudioCtx.state === "suspended") {
-      sharedAudioCtx.resume();
-    }
+    warmUpAudioContext();
     return sharedAudioCtx ? { ctx: sharedAudioCtx, dest: masterCompressor } : null;
   }
 
-  // Helper: create a short high-frequency metallic noise spark burst
+  // Helper: create a short high-frequency metallic noise spark burst using cached buffer
   function triggerMetalSpark(ctx, dest, startTime, durationSec, cutoffHz, gainAmount) {
-    const bufSize = Math.max(1, Math.floor(ctx.sampleRate * durationSec));
-    const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
-    const data = buf.getChannelData(0);
-    for (let i = 0; i < bufSize; i++) {
-      const env = Math.pow(1 - i / bufSize, 2.2);
-      data[i] = (Math.random() * 2 - 1) * env;
+    if (!cachedNoiseBuffer && ctx) {
+      const bufSize = Math.max(1, Math.floor(ctx.sampleRate * 0.05));
+      cachedNoiseBuffer = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+      const data = cachedNoiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufSize; i++) {
+        const env = Math.pow(1 - i / bufSize, 2.2);
+        data[i] = (Math.random() * 2 - 1) * env;
+      }
     }
 
     const src = ctx.createBufferSource();
-    src.buffer = buf;
+    src.buffer = cachedNoiseBuffer;
 
     const hp = ctx.createBiquadFilter();
     hp.type = "highpass";
@@ -172,17 +197,19 @@ document.addEventListener("DOMContentLoaded", function () {
     osc.stop(startTime + durationSec + 0.004);
   }
 
-  // Helper: play a crisp glass surface contact tap transient
+  // Helper: play a crisp glass surface contact tap transient using cached buffer
   function playGlassContactClick(ctx, dest, startTime, durationSec, centerHz, qVal, gainVal) {
-    const bufSize = Math.max(1, Math.floor(ctx.sampleRate * durationSec));
-    const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
-    const data = buf.getChannelData(0);
-    for (let i = 0; i < bufSize; i++) {
-      const env = Math.pow(1 - i / bufSize, 2.2);
-      data[i] = (Math.random() * 2 - 1) * env;
+    if (!cachedNoiseBuffer && ctx) {
+      const bufSize = Math.max(1, Math.floor(ctx.sampleRate * 0.05));
+      cachedNoiseBuffer = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+      const data = cachedNoiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufSize; i++) {
+        const env = Math.pow(1 - i / bufSize, 2.2);
+        data[i] = (Math.random() * 2 - 1) * env;
+      }
     }
     const src = ctx.createBufferSource();
-    src.buffer = buf;
+    src.buffer = cachedNoiseBuffer;
 
     const bp = ctx.createBiquadFilter();
     bp.type = "bandpass";
@@ -405,7 +432,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     setTimeout(function () {
       window.location.href = targetHref;
-    }, 260);
+    }, 130);
   }
 
   // Slide smoothly to a target virtual position (for direct clicks, arrows, keyboard)
@@ -1095,26 +1122,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (elementsToReveal.length === 0) return;
 
-    elementsToReveal.forEach(function (el) {
-      if (!el.classList.contains("reveal-on-scroll")) {
-        el.classList.add("reveal-on-scroll");
-      }
-
-      const parent = el.parentElement;
-      if (parent) {
-        const siblings = Array.from(parent.children).filter(function (child) {
-          return child.classList.contains("reveal-on-scroll");
-        });
-        if (siblings.length > 1) {
-          const index = siblings.indexOf(el);
-          const delayClass = "reveal-delay-" + ((index % 4) + 1);
-          if (!el.classList.contains(delayClass)) {
-            el.classList.add(delayClass);
-          }
-        }
-      }
-    });
-
     if (prefersReducedMotion || !("IntersectionObserver" in window)) {
       elementsToReveal.forEach(function (el) {
         el.classList.add("is-revealed");
@@ -1130,12 +1137,23 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     }, {
-      threshold: 0.08,
-      rootMargin: "0px 0px -40px 0px"
+      threshold: 0.04,
+      rootMargin: "0px 0px -20px 0px"
     });
 
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
     elementsToReveal.forEach(function (el) {
-      observer.observe(el);
+      const rect = el.getBoundingClientRect();
+      // Instantly reveal elements already visible in the viewport so initial page load is 100% smooth with 0ms lag
+      if (rect.top < viewportHeight - 10) {
+        el.classList.add("is-revealed");
+      } else {
+        if (!el.classList.contains("reveal-on-scroll")) {
+          el.classList.add("reveal-on-scroll");
+        }
+        observer.observe(el);
+      }
     });
   }
 
@@ -1188,6 +1206,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const isLight = currentTheme !== "dark";
     const isDark = currentTheme === "dark";
+    const isSoundOn = window.siteAudio ? window.siteAudio.isEnabled() : true;
 
     // Compact Centered Modal Window with Translucent Blurred Backdrop
     const overlay = document.createElement("div");
@@ -1336,6 +1355,76 @@ document.addEventListener("DOMContentLoaded", function () {
       '            <svg class="svg-icon" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5">' +
       '              <polyline points="20 6 9 17 4 12"></polyline>' +
       '            </svg>' +
+      '          </span>' +
+      '        </button>' +
+      '      </div>' +
+      '    </div>' +
+      '    <!-- Section 2: Mechanical Acoustics (Audio Feedback) -->' +
+      '    <div class="settings-section sound-section">' +
+      '      <div class="settings-section-header">' +
+      '        <div class="section-heading-group">' +
+      '          <span class="settings-section-badge">Audio</span>' +
+      '          <h4 class="settings-section-title">Mechanical Sound</h4>' +
+      '        </div>' +
+      '        <span class="settings-section-sub">Tactile audio feedback on button clicks &amp; navigation</span>' +
+      '      </div>' +
+      '      <div class="sound-toggle-row">' +
+      '        <div class="sound-toggle-info">' +
+      '          <span class="theme-card-name" style="font-size:0.85rem;">Click &amp; Slider Acoustics</span>' +
+      '          <span class="theme-card-desc" style="font-size:0.72rem;">Synthesized live via Web Audio API (Default: On)</span>' +
+      '        </div>' +
+      '        <label class="sound-switch" for="siteSoundToggle" aria-label="Toggle mechanical sound">' +
+      '          <input type="checkbox" id="siteSoundToggle" class="sound-switch-input" ' + (isSoundOn ? 'checked' : '') + ' />' +
+      '          <span class="sound-switch-slider">' +
+      '            <span class="sound-switch-thumb"></span>' +
+      '          </span>' +
+      '        </label>' +
+      '      </div>' +
+      '    </div>' +
+      '    <!-- Section 3: Font Pairings Combinations -->' +
+      '    <div class="settings-section font-preset-section">' +
+      '      <div class="settings-section-header">' +
+      '        <div class="section-heading-group">' +
+      '          <span class="settings-section-badge">Typography</span>' +
+      '          <h4 class="settings-section-title">Font Combinations</h4>' +
+      '        </div>' +
+      '        <span class="settings-section-sub">Choose typeface combination across portal</span>' +
+      '      </div>' +
+      '      <div class="font-presets-grid" role="radiogroup" aria-label="Font Combination Selection">' +
+      '        <button type="button" class="font-preset-btn ' + (currentFontPreset === 'architectural-lab' ? 'active' : '') + '" data-font-preset="architectural-lab" role="radio" aria-checked="' + (currentFontPreset === 'architectural-lab' ? 'true' : 'false') + '">'
+      '          <div class="font-preset-info">' +
+      '            <span class="font-preset-title">Architectural Lab</span>' +
+      '            <span class="font-preset-desc">DM Sans &bull; Space Mono (Default)</span>' +
+      '          </div>' +
+      '          <span class="font-preset-check" aria-hidden="true">' +
+      '            <svg class="svg-icon" viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>' +
+      '          </span>' +
+      '        </button>' +
+      '        <button type="button" class="font-preset-btn ' + (currentFontPreset === 'academic-archive' ? 'active' : '') + '" data-font-preset="academic-archive" role="radio" aria-checked="' + (currentFontPreset === 'academic-archive' ? 'true' : 'false') + '">' +
+      '          <div class="font-preset-info">' +
+      '            <span class="font-preset-title">Academic Archive</span>' +
+      '            <span class="font-preset-desc">Newsreader &bull; JetBrains</span>' +
+      '          </div>' +
+      '          <span class="font-preset-check" aria-hidden="true">' +
+      '            <svg class="svg-icon" viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>' +
+      '          </span>' +
+      '        </button>' +
+      '        <button type="button" class="font-preset-btn ' + (currentFontPreset === 'collegiate-heritage' ? 'active' : '') + '" data-font-preset="collegiate-heritage" role="radio" aria-checked="' + (currentFontPreset === 'collegiate-heritage' ? 'true' : 'false') + '">' +
+      '          <div class="font-preset-info">' +
+      '            <span class="font-preset-title">Collegiate Heritage</span>' +
+      '            <span class="font-preset-desc">Lora &bull; Inter</span>' +
+      '          </div>' +
+      '          <span class="font-preset-check" aria-hidden="true">' +
+      '            <svg class="svg-icon" viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>' +
+      '          </span>' +
+      '        </button>' +
+      '        <button type="button" class="font-preset-btn ' + (currentFontPreset === 'nextgen-tech' ? 'active' : '') + '" data-font-preset="nextgen-tech" role="radio" aria-checked="' + (currentFontPreset === 'nextgen-tech' ? 'true' : 'false') + '">' +
+      '          <div class="font-preset-info">' +
+      '            <span class="font-preset-title">Next-Gen Tech</span>' +
+      '            <span class="font-preset-desc">Outfit &bull; Manrope</span>' +
+      '          </div>' +
+      '          <span class="font-preset-check" aria-hidden="true">' +
+      '            <svg class="svg-icon" viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>' +
       '          </span>' +
       '        </button>' +
       '      </div>' +
@@ -1648,6 +1737,18 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   }
+
+
+  // Universal Physical Click Acoustic Feedback on all buttons, tabs, pills, and interactive controls
+  document.addEventListener("pointerdown", function (e) {
+    if (!window.siteAudio || !window.siteAudio.isEnabled()) return;
+    const btn = e.target.closest(
+      "button, .btn, a.btn, input[type='button'], input[type='submit'], .year-filter-pill, .tab-btn, .origami-flap-btn, .font-preset-btn, .theme-card-btn, .font-scale-tick-num, .font-scale-stepper-btn, .font-scale-reset-btn, .mobile-toggle, .site-settings-btn, .nav-arrow, .cat-arrow"
+    );
+    if (btn) {
+      window.siteAudio.playGlassTap();
+    }
+  }, { passive: true });
 
   initScrollAnimation();
   initSiteSettings();
