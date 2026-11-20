@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem("site_theme") || "light";
+        if (theme === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+          document.documentElement.removeAttribute("data-theme");
+        }
+        var fontSize = localStorage.getItem("site_font_size");
+        if (fontSize && fontSize !== "16") {
+          document.documentElement.setAttribute("data-font-size", fontSize);
+          document.documentElement.style.fontSize = fontSize + "px";
+        }
+        var fontPreset = localStorage.getItem("site_font_preset");
+        if (fontPreset && fontPreset !== "architectural-lab") {
+          document.documentElement.setAttribute("data-font-preset", fontPreset);
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Architecture &amp; Schematics Gallery | Student Project Showcase</title>
+  <!-- Google Fonts: The Architectural Hardware Lab (Space Grotesk + DM Sans + Space Mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Space+Grotesk:wght@400..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/gallery.css" />
+</head>
+<body>
+  <!-- Floating Navigation Bar (Pure Slider Feature Only) -->
+  <header class="site-header">
+    <div class="navbar">
+      <!-- Mobile Bar Header (Shown only on small screens) -->
+      <div class="mobile-nav-bar">
+        <span class="mobile-current-page" id="mobileCurrentPage">Gallery</span>
+        <button class="mobile-toggle" id="mobileNavToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <svg class="svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Pure Slider Navigation -->
+      <nav class="nav-slider-nav" id="navSliderNav">
+        <div class="mobile-slider-hint" aria-hidden="true">
+          <span>Slide or tap to switch page</span>
+        </div>
+
+        <div class="nav-slider-container" id="navSliderContainer">
+          <!-- Previous Page Button -->
+          <button type="button" class="nav-arrow nav-arrow-prev" id="navSliderPrev" aria-label="Previous Page">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+
+          <!-- Slider Viewport Window -->
+          <div class="nav-slider-viewport" id="navSliderViewport" tabindex="0" aria-label="Page Slider Navigation">
+            <div class="nav-slider-center-pill" id="navSliderCenterPill" aria-hidden="true"></div>
+
+            <div class="nav-slider-track" id="navSliderTrack">
+              <a href="index.html" class="nav-slider-item" data-index="0" data-page="index.html" draggable="false">Home</a>
+              <a href="projects.html" class="nav-slider-item" data-index="1" data-page="projects.html" draggable="false">Projects</a>
+              <a href="project-details.html" class="nav-slider-item" data-index="2" data-page="project-details.html" draggable="false">Project Details</a>
+              <a href="gallery.html" class="nav-slider-item" data-index="3" data-page="gallery.html" draggable="false">Gallery</a>
+              <a href="contact.html" class="nav-slider-item" data-index="4" data-page="contact.html" draggable="false">Submit / Contact</a>
+            </div>
+          </div>
+
+          <!-- Next Page Button -->
+          <button type="button" class="nav-arrow nav-arrow-next" id="navSliderNext" aria-label="Next Page">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile Drawer Academic Metadata Card (Visible only inside mobile hamburger) -->
+        <div class="mobile-drawer-academic-card" aria-label="Academic Information">
+          <div class="drawer-academic-header">
+            <div class="drawer-brand-wrap">
+              <div class="drawer-brand-seal" aria-hidden="true">E</div>
+              <span class="drawer-brand-title">Student Showcase</span>
+            </div>
+            <span class="drawer-badge-live">AY 2026-27 ONGOING</span>
+          </div>
+
+          <div class="drawer-chips-cluster">
+            <div class="drawer-chip-item">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                <path d="M2 17l10 5 10-5"></path>
+                <path d="M2 12l10 5 10-5"></path>
+              </svg>
+              <div class="drawer-chip-text">
+                <span><strong>NIET</strong> Greater Noida</span>
+                <span style="color:var(--text-muted);">&bull; Autonomous</span>
+              </div>
+            </div>
+
+            <div class="drawer-chip-item">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+              <div class="drawer-chip-text">
+                <code>DCSE0152</code>
+                <span style="color:var(--text-muted);">&bull; Web Designing</span>
+              </div>
+            </div>
+
+            <div class="drawer-chip-item">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9 12 11 14 15 10"></polyline>
+              </svg>
+              <div class="drawer-chip-text">
+                <span><strong>Ms. Vishakha Rani</strong></span>
+                <span style="color:var(--text-muted);">&bull; Faculty Mentor</span>
+              </div>
+            </div>
+
+            <div class="drawer-chip-item">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+              <div class="drawer-chip-text">
+                <span><strong>Group 08</strong></span>
+                <span style="color:var(--text-muted);">&bull; Capstone Cohort</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="gallery-header">
+      <span class="pill-badge">Circuit Schematics &amp; Diagrams</span>
+      <h1>System Architecture Gallery</h1>
+      <p>Visual diagrams and flowcharts showing how our project hardware, microcontrollers, and web dashboards connect together.</p>
+    </section>
+
+    <!-- Mechanical Aperture Category Filter Slider -->
+    <div class="gallery-mechanical-filter-bar" role="region" aria-label="Mechanical Category Filter Slider">
+      <div class="gallery-slider-shell">
+        <button type="button" class="gallery-slider-arrow gallery-slider-prev" id="gallerySliderPrev" aria-label="Previous Category">
+          <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <div class="gallery-slider-viewport" id="gallerySliderViewport" tabindex="0" aria-label="Filter Categories Reel">
+          <div class="gallery-slider-center-pill" id="gallerySliderCenterPill" aria-hidden="true"></div>
+
+          <div class="gallery-slider-track" id="gallerySliderTrack">
+            <button type="button" class="gallery-slider-item is-center" data-index="0" data-filter="all">All Diagrams</button>
+            <button type="button" class="gallery-slider-item" data-index="1" data-filter="iot">IoT Circuits</button>
+            <button type="button" class="gallery-slider-item" data-index="2" data-filter="web">Web Flowcharts</button>
+            <button type="button" class="gallery-slider-item" data-index="3" data-filter="sensors">Sensors &amp; Wiring</button>
+          </div>
+        </div>
+
+        <button type="button" class="gallery-slider-arrow gallery-slider-next" id="gallerySliderNext" aria-label="Next Category">
+          <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <div class="gallery-filter-meta">
+        <span class="gallery-filter-counter" id="galleryFilterCounter">Showing 4 Diagrams</span>
+        <span class="gallery-filter-hint">Click &ldquo;View Spec&rdquo; for circuit details</span>
+      </div>
+    </div>
+
+    <!-- Gallery Grid -->
+    <div class="gallery-grid">
+      <!-- Diagram 1 (Main Project Architecture) -->
+      <article class="gallery-card" data-category="web">
+        <div class="schematic-display">
+          <div class="blueprint-grid-bg"></div>
+          <span class="schematic-badge">Portal Architecture #01</span>
+          <div class="schematic-diagram-core">
+            <div class="schematic-pill">Settings Engine<small>Theme &bull; Size &bull; Audio</small></div>
+            <span class="schematic-arrow">&rarr;</span>
+            <div class="schematic-pill">Web Audio Synthesizer<small>Procedural Acoustics</small></div>
+            <span class="schematic-arrow">&rarr;</span>
+            <div class="schematic-pill">Filter Pipeline<small>Year &bull; Category &bull; Search</small></div>
+          </div>
+        </div>
+        <div class="gallery-card-body">
+          <h2 class="gallery-card-title">Showcase Portal Architecture &amp; State Pipeline</h2>
+          <p class="gallery-card-desc">
+            Data and event flow diagram showing how user appearance preferences, procedural acoustics, and multi-factor project directory filters synchronize across views.
+          </p>
+          <div class="gallery-card-footer">
+            <span class="pill-badge">Web Architecture</span>
+            <button class="spec-trigger-btn" 
+              data-title="Student Showcase Portal Architecture" 
+              data-desc="Modular Vanilla JavaScript ES6 architecture coordinates persistent client preferences, procedural Web Audio API synthesis nodes, and reactive DOM viewports."
+              data-stack="HTML5, CSS3 Custom Properties, Vanilla JS ES6, Web Audio API, LocalStorage">
+              View Spec
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Diagram 2 -->
+      <article class="gallery-card" data-category="web">
+        <div class="schematic-display">
+          <div class="blueprint-grid-bg"></div>
+          <span class="schematic-badge">Web Architecture #02</span>
+          <div class="schematic-diagram-core">
+            <div class="schematic-pill">HTML Form<small>User Input</small></div>
+            <span class="schematic-arrow">&rarr;</span>
+            <div class="schematic-pill">JS Validation<small>Check Inputs</small></div>
+            <span class="schematic-arrow">&rarr;</span>
+            <div class="schematic-pill">LocalStorage<small>Browser Storage</small></div>
+          </div>
+        </div>
+        <div class="gallery-card-body">
+          <h2 class="gallery-card-title">Notes Portal Submission Flowchart</h2>
+          <p class="gallery-card-desc">
+            Data flowchart showing how student project submission forms validate roll numbers and save drafts safely in local storage.
+          </p>
+          <div class="gallery-card-footer">
+            <span class="pill-badge">Web Flow</span>
+            <button class="spec-trigger-btn"
+              data-title="Form Validation &amp; Local Storage Flow"
+              data-desc="Validates student roll number format (e.g. 0261CSIOTxxx), verifies required fields, and persists form drafts so data is not lost on reload."
+              data-stack="HTML5 Form, JavaScript Validation, LocalStorage API">
+              View Spec
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Diagram 3 -->
+      <article class="gallery-card" data-category="sensors">
+        <div class="schematic-display">
+          <div class="blueprint-grid-bg"></div>
+          <span class="schematic-badge">Sensor Diagram #03</span>
+          <div class="schematic-diagram-core">
+            <div class="schematic-pill">Soil Sensor<small>Analog Pin A0</small></div>
+            <span class="schematic-arrow">&rarr;</span>
+            <div class="schematic-pill">Arduino UNO<small>Threshold Logic</small></div>
+            <span class="schematic-arrow">&rarr;</span>
+            <div class="schematic-pill">Water Pump<small>5V Submersible</small></div>
+          </div>
+        </div>
+        <div class="gallery-card-body">
+          <h2 class="gallery-card-title">Automatic Plant Watering Circuit</h2>
+          <p class="gallery-card-desc">
+            Analog connection between capacitive soil moisture probe and Arduino microcontroller to activate a small water pump when soil dries.
+          </p>
+          <div class="gallery-card-footer">
+            <span class="pill-badge">Sensor Wiring</span>
+            <button class="spec-trigger-btn"
+              data-title="Plant Watering Circuit Wiring"
+              data-desc="Measures analog resistance of wet vs dry soil. When the value drops below 300 (dry soil), the relay triggers the 5V submersible pump for 4 seconds."
+              data-stack="Arduino UNO, Capacitive Soil Probe, 5V DC Mini Pump, 1-Channel Relay">
+              View Spec
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Diagram 4 -->
+      <article class="gallery-card" data-category="web">
+        <div class="schematic-display">
+          <div class="blueprint-grid-bg"></div>
+          <span class="schematic-badge">Web Architecture #04</span>
+          <div class="schematic-diagram-core">
+            <div class="schematic-pill">Teacher Webpage<small>Generate QR</small></div>
+            <span class="schematic-arrow">&rarr;</span>
+            <div class="schematic-pill">Student Phone<small>Camera Scan</small></div>
+            <span class="schematic-arrow">&rarr;</span>
+            <div class="schematic-pill">Attendance Log<small>Table Row</small></div>
+          </div>
+        </div>
+        <div class="gallery-card-body">
+          <h2 class="gallery-card-title">QR Code Attendance Data Flow</h2>
+          <p class="gallery-card-desc">
+            System flowchart showing how attendance codes are generated on screen, scanned by students, and recorded into attendance tables.
+          </p>
+          <div class="gallery-card-footer">
+            <span class="pill-badge">Web System</span>
+            <button class="spec-trigger-btn"
+              data-title="QR Code Attendance Pipeline"
+              data-desc="Generates dynamic time-expiring QR code every 30 seconds. Student scanner decodes the session token and sends student ID to register attendance."
+              data-stack="HTML5 Canvas QR, JavaScript Fetch, Attendance Table">
+              View Spec
+            </button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <!-- Component Specification Modal Popup -->
+  <div class="modal-overlay" id="specModalOverlay" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modalSpecTitle" style="font-size:1.3rem;">Circuit Specification</h3>
+        <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close Modal">&times;</button>
+      </div>
+      <div style="margin-bottom: 20px;">
+        <span class="pill-badge" style="margin-bottom:12px;">Wiring &amp; Logic Details</span>
+        <p id="modalSpecDesc" style="color:var(--text-secondary); font-size:0.95rem; line-height:1.6; margin-top:8px;"></p>
+      </div>
+      <div style="background-color: var(--bg-color); border:1px solid var(--border-color); border-radius:var(--radius-sm); padding:16px;">
+        <strong style="font-size:0.85rem; color:var(--text-primary); display:block; margin-bottom:4px;">Hardware Components &amp; Libraries:</strong>
+        <span id="modalSpecStack" style="font-family:var(--font-mono); font-size:0.82rem; color:var(--text-secondary);"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Compact 3D Origami-Folded Footer -->
+  <footer class="site-footer origami-footer" id="origamiFooter">
+    <div class="origami-shell">
+      <div class="origami-bar">
+        <div class="origami-brand-mini">
+          <span class="origami-crease-mark" aria-hidden="true"></span>
+          <span class="origami-title"><strong>Student Project Showcase</strong> &bull; Group 08</span>
+        </div>
+
+        <div class="origami-flaps" role="tablist" aria-label="Footer Information Flaps">
+          <button type="button" class="origami-flap-btn" data-flap="about" aria-expanded="false">
+            <span>About &amp; Team</span>
+            <svg class="svg-icon flap-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+
+          <button type="button" class="origami-flap-btn" data-flap="links" aria-expanded="false">
+            <span>Quick Links</span>
+            <svg class="svg-icon flap-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+
+          <button type="button" class="origami-flap-btn" data-flap="college" aria-expanded="false">
+            <span>College Info</span>
+            <svg class="svg-icon flap-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+
+          <button type="button" class="origami-flap-btn origami-unfold-all" data-flap="all" aria-expanded="false" title="Unfold all origami panels">
+            <span>Unfold All</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="origami-stage">
+        <div class="origami-panel" data-panel="about">
+          <div class="origami-panel-inner">
+            <div class="origami-panel-tag">01 / Project &amp; Team</div>
+            <p class="origami-desc">
+              A Web Designing (DCSE0152) Capstone Project developed by Group 08 students, Department of Computer Science &amp; Engineering (IoT), NIET Greater Noida.
+            </p>
+            <div class="origami-team-chips">
+              <span class="origami-chip-label">Team:</span>
+              <span class="origami-chip">Ashish Ranjan</span>
+              <span class="origami-chip">Ashish Prajapati</span>
+              <span class="origami-chip">Arunima Bhardwaj</span>
+              <span class="origami-chip">Aryan</span>
+              <span class="origami-chip">Ashmit Tiwari</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="origami-panel" data-panel="links">
+          <div class="origami-panel-inner">
+            <div class="origami-panel-tag">02 / Quick Links</div>
+            <ul class="origami-links-row">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="projects.html">Project Directory</a></li>
+              <li><a href="project-details.html">Case Study &amp; Rubric</a></li>
+              <li><a href="gallery.html">Circuit Schematics</a></li>
+              <li><a href="contact.html">Submit Project</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="origami-panel" data-panel="college">
+          <div class="origami-panel-inner">
+            <div class="origami-panel-tag">03 / College Information</div>
+            <div class="origami-meta-grid">
+              <div class="origami-meta-cell">
+                <span>Course</span>
+                <strong>DCSE0152 (Web Designing)</strong>
+              </div>
+              <div class="origami-meta-cell">
+                <span>Faculty Mentor</span>
+                <strong>Ms. Vishakha Rani</strong>
+              </div>
+              <div class="origami-meta-cell">
+                <span>Institution</span>
+                <strong>Noida Institute of Engineering &amp; Technology, Knowledge Park II, Greater Noida</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="origami-bottom-strip">
+        <span>&copy; 2026-27 Student Project Showcase &bull; Group 08 Capstone Team</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/gallery.js"></script>
+</body>
+</html>

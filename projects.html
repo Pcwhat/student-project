@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem("site_theme") || "light";
+        if (theme === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+          document.documentElement.removeAttribute("data-theme");
+        }
+        var fontSize = localStorage.getItem("site_font_size");
+        if (fontSize && fontSize !== "16") {
+          document.documentElement.setAttribute("data-font-size", fontSize);
+          document.documentElement.style.fontSize = fontSize + "px";
+        }
+        var fontPreset = localStorage.getItem("site_font_preset");
+        if (fontPreset && fontPreset !== "architectural-lab") {
+          document.documentElement.setAttribute("data-font-preset", fontPreset);
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects Directory | Student Project Showcase</title>
+  <!-- Google Fonts: The Architectural Hardware Lab (Space Grotesk + DM Sans + Space Mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Space+Grotesk:wght@400..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/projects.css" />
+</head>
+<body>
+  <!-- Floating Navigation Bar (Pure Slider Feature Only) -->
+  <header class="site-header">
+    <div class="navbar">
+      <!-- Mobile Bar Header (Shown only on small screens) -->
+      <div class="mobile-nav-bar">
+        <span class="mobile-current-page" id="mobileCurrentPage">Projects</span>
+        <button class="mobile-toggle" id="mobileNavToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <svg class="svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Pure Slider Navigation -->
+      <nav class="nav-slider-nav" id="navSliderNav">
+        <div class="mobile-slider-hint" aria-hidden="true">
+          <span>Slide or tap to switch page</span>
+        </div>
+
+        <div class="nav-slider-container" id="navSliderContainer">
+          <!-- Previous Page Button -->
+          <button type="button" class="nav-arrow nav-arrow-prev" id="navSliderPrev" aria-label="Previous Page">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+
+          <!-- Slider Viewport Window -->
+          <div class="nav-slider-viewport" id="navSliderViewport" tabindex="0" aria-label="Page Slider Navigation">
+            <div class="nav-slider-center-pill" id="navSliderCenterPill" aria-hidden="true"></div>
+
+            <div class="nav-slider-track" id="navSliderTrack">
+              <a href="index.html" class="nav-slider-item" data-index="0" data-page="index.html" draggable="false">Home</a>
+              <a href="projects.html" class="nav-slider-item" data-index="1" data-page="projects.html" draggable="false">Projects</a>
+              <a href="project-details.html" class="nav-slider-item" data-index="2" data-page="project-details.html" draggable="false">Project Details</a>
+              <a href="gallery.html" class="nav-slider-item" data-index="3" data-page="gallery.html" draggable="false">Gallery</a>
+              <a href="contact.html" class="nav-slider-item" data-index="4" data-page="contact.html" draggable="false">Submit / Contact</a>
+            </div>
+          </div>
+
+          <!-- Next Page Button -->
+          <button type="button" class="nav-arrow nav-arrow-next" id="navSliderNext" aria-label="Next Page">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile Drawer Academic Metadata Card (Visible only inside mobile hamburger) -->
+        <div class="mobile-drawer-academic-card" aria-label="Academic Information">
+          <div class="drawer-academic-header">
+            <div class="drawer-brand-wrap">
+              <div class="drawer-brand-seal" aria-hidden="true">E</div>
+              <span class="drawer-brand-title">Student Showcase</span>
+            </div>
+            <span class="drawer-badge-live">AY 2026-27 ONGOING</span>
+          </div>
+
+          <div class="drawer-chips-cluster">
+            <div class="drawer-chip-item">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                <path d="M2 17l10 5 10-5"></path>
+                <path d="M2 12l10 5 10-5"></path>
+              </svg>
+              <div class="drawer-chip-text">
+                <span><strong>NIET</strong> Greater Noida</span>
+                <span style="color:var(--text-muted);">&bull; Autonomous</span>
+              </div>
+            </div>
+
+            <div class="drawer-chip-item">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+              <div class="drawer-chip-text">
+                <code>DCSE0152</code>
+                <span style="color:var(--text-muted);">&bull; Web Designing</span>
+              </div>
+            </div>
+
+            <div class="drawer-chip-item">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9 12 11 14 15 10"></polyline>
+              </svg>
+              <div class="drawer-chip-text">
+                <span><strong>Ms. Vishakha Rani</strong></span>
+                <span style="color:var(--text-muted);">&bull; Faculty Mentor</span>
+              </div>
+            </div>
+
+            <div class="drawer-chip-item">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+              <div class="drawer-chip-text">
+                <span><strong>Group 08</strong></span>
+                <span style="color:var(--text-muted);">&bull; Capstone Cohort</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Page Header -->
+    <section class="projects-header">
+      <span class="pill-badge">PBL Project Repository</span>
+      <h1>Student Projects Directory</h1>
+      <p>Search, filter, and view student engineering projects submitted for Web Designing (DCSE0152) and IoT courses.</p>
+    </section>
+
+    <!-- Search & Filter Controls -->
+    <div class="directory-toolbar">
+      <div class="toolbar-top-row">
+        <div class="search-field-box">
+          <svg class="svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="directorySearchInput" class="search-field-input" placeholder="Search by title, student name, or tech stack..." />
+        </div>
+
+        <!-- View Switcher (Card Grid vs Table) -->
+        <div class="view-toggle-group">
+          <button id="gridViewBtn" class="view-toggle-btn active" title="Grid View">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            Card Grid
+          </button>
+          <button id="tableViewBtn" class="view-toggle-btn" title="Table View">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="8" y1="6" x2="21" y2="6"></line>
+              <line x1="8" y1="12" x2="21" y2="12"></line>
+              <line x1="8" y1="18" x2="21" y2="18"></line>
+              <line x1="3" y1="6" x2="3.01" y2="6"></line>
+              <line x1="3" y1="12" x2="3.01" y2="12"></line>
+              <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+            Table View
+          </button>
+        </div>
+      </div>
+
+      <!-- Domain Category Infinite Slider (Clear Text, Zero Fade) -->
+      <div class="category-filter-row">
+        <span class="filter-label">Category:</span>
+
+        <div class="category-slider-box" id="categorySliderBox">
+          <button type="button" class="cat-arrow cat-arrow-prev" id="catSliderPrev" aria-label="Previous Category">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+
+          <div class="category-slider-viewport" id="categorySliderViewport" tabindex="0" aria-label="Infinite Category Slider">
+            <div class="category-center-pill" id="categoryCenterPill" aria-hidden="true"></div>
+
+            <!-- Three full cycles (12 slots) keep the full-width track completely filled with 100% clear text -->
+            <div class="category-slider-track" id="categorySliderTrack">
+              <span role="button" class="category-slider-item" data-filter="all" data-slot="0" draggable="false">All Projects</span>
+              <span role="button" class="category-slider-item" data-filter="iot" data-slot="1" draggable="false">IoT &amp; Hardware</span>
+              <span role="button" class="category-slider-item" data-filter="web" data-slot="2" draggable="false">Web Development</span>
+              <span role="button" class="category-slider-item" data-filter="automation" data-slot="3" draggable="false">Automation</span>
+              <span role="button" class="category-slider-item" data-filter="all" data-slot="4" draggable="false">All Projects</span>
+              <span role="button" class="category-slider-item" data-filter="iot" data-slot="5" draggable="false">IoT &amp; Hardware</span>
+              <span role="button" class="category-slider-item" data-filter="web" data-slot="6" draggable="false">Web Development</span>
+              <span role="button" class="category-slider-item" data-filter="automation" data-slot="7" draggable="false">Automation</span>
+              <span role="button" class="category-slider-item" data-filter="all" data-slot="8" draggable="false">All Projects</span>
+              <span role="button" class="category-slider-item" data-filter="iot" data-slot="9" draggable="false">IoT &amp; Hardware</span>
+              <span role="button" class="category-slider-item" data-filter="web" data-slot="10" draggable="false">Web Development</span>
+              <span role="button" class="category-slider-item" data-filter="automation" data-slot="11" draggable="false">Automation</span>
+            </div>
+          </div>
+
+          <button type="button" class="cat-arrow cat-arrow-next" id="catSliderNext" aria-label="Next Category">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Student Academic Year Filter Row -->
+      <div class="student-year-filter-row" role="group" aria-label="Filter projects by student academic year">
+        <span class="filter-label">Student Year:</span>
+        <div class="year-filter-pills" id="yearFilterPills">
+          <button type="button" class="year-filter-pill active" data-year="all" aria-pressed="true">All Years</button>
+          <button type="button" class="year-filter-pill" data-year="1" aria-pressed="false">1st Year</button>
+          <button type="button" class="year-filter-pill" data-year="2" aria-pressed="false">2nd Year</button>
+          <button type="button" class="year-filter-pill" data-year="3" aria-pressed="false">3rd Year</button>
+          <button type="button" class="year-filter-pill" data-year="4" aria-pressed="false">Final Year (4th)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Count -->
+    <div class="results-info-bar">
+      <span id="resultsCounter">Showing 6 projects</span>
+      <span style="font-size:0.82rem; color:var(--text-secondary);">Click on any project to view complete case study</span>
+    </div>
+
+    <!-- 1. Card Grid View -->
+    <div class="projects-grid-view" id="projectsGridView">
+      <!-- Project 1 (Web Development - Group 08 Main Project) -->
+      <article class="project-card" data-category="web" data-year="4">
+        <div class="card-header-bar">
+          <div class="card-badges-group">
+            <span class="pill-badge">Web Development</span>
+            <span class="student-year-badge year-4">Final Year</span>
+          </div>
+          <div class="card-icon-tag">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </div>
+        </div>
+        <div class="card-content-body">
+          <h2 class="project-heading">Student Project Showcase &amp; Evaluation Platform</h2>
+          <p class="project-synopsis">
+            A responsive, high-performance academic web portal built to archive, search, and present student capstone engineering projects with real-time academic rubric evaluation, custom thematic controls, mechanical acoustics, and interactive project directories.
+          </p>
+          <div class="stack-pills-wrap">
+            <span class="stack-mini-pill">HTML5 &amp; CSS3</span>
+            <span class="stack-mini-pill">Vanilla JavaScript</span>
+            <span class="stack-mini-pill">Web Audio API</span>
+            <span class="stack-mini-pill">Design Tokens</span>
+            <span class="stack-mini-pill">Rubric Matrix</span>
+          </div>
+        </div>
+        <div class="card-footer-row">
+          <div class="author-meta-box">
+            <strong>Group 08 Main Project</strong>
+            <span>Ashish Ranjan &amp; Team &bull; B.Tech CSE (IoT)</span>
+          </div>
+          <a href="project-details.html" class="btn btn-outline" style="padding: 6px 12px; font-size: 0.82rem;">
+            Details &rarr;
+          </a>
+        </div>
+      </article>
+
+      <!-- Project 2 (Web) -->
+      <article class="project-card" data-category="web" data-year="3">
+        <div class="card-header-bar">
+          <div class="card-badges-group">
+            <span class="pill-badge">Web Development</span>
+            <span class="student-year-badge year-3">3rd Year</span>
+          </div>
+          <div class="card-icon-tag">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="card-content-body">
+          <h2 class="project-heading">Student Notes &amp; Question Paper Portal</h2>
+          <p class="project-synopsis">
+            A peer-to-peer web portal where engineering students can upload and download verified semester notes, syllabus sheets, and previous year question papers.
+          </p>
+          <div class="stack-pills-wrap">
+            <span class="stack-mini-pill">HTML5</span>
+            <span class="stack-mini-pill">CSS3</span>
+            <span class="stack-mini-pill">JavaScript ES6</span>
+            <span class="stack-mini-pill">LocalStorage</span>
+          </div>
+        </div>
+        <div class="card-footer-row">
+          <div class="author-meta-box">
+            <strong>Arunima Bhardwaj &amp; Aryan</strong>
+            <span>Roll: 0261CSIOT038, 058</span>
+          </div>
+          <a href="project-details.html" class="btn btn-outline" style="padding: 6px 12px; font-size: 0.82rem;">
+            Details &rarr;
+          </a>
+        </div>
+      </article>
+
+      <!-- Project 3 (Automation) -->
+      <article class="project-card" data-category="automation" data-year="2">
+        <div class="card-header-bar">
+          <div class="card-badges-group">
+            <span class="pill-badge">Automation</span>
+            <span class="student-year-badge year-2">2nd Year</span>
+          </div>
+          <div class="card-icon-tag">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+              <rect x="9" y="9" width="6" height="6"></rect>
+              <line x1="9" y1="1" x2="9" y2="4"></line>
+              <line x1="15" y1="1" x2="15" y2="4"></line>
+              <line x1="9" y1="20" x2="9" y2="23"></line>
+              <line x1="15" y1="20" x2="15" y2="23"></line>
+            </svg>
+          </div>
+        </div>
+        <div class="card-content-body">
+          <h2 class="project-heading">QR Code Student Attendance Web System</h2>
+          <p class="project-desc project-synopsis">
+            A quick attendance marking web application where teachers generate a dynamic QR code on screen and students scan to mark attendance instantly.
+          </p>
+          <div class="stack-pills-wrap">
+            <span class="stack-mini-pill">HTML5 Web API</span>
+            <span class="stack-mini-pill">JavaScript</span>
+            <span class="stack-mini-pill">QR Scanner</span>
+            <span class="stack-mini-pill">CSS Flexbox</span>
+          </div>
+        </div>
+        <div class="card-footer-row">
+          <div class="author-meta-box">
+            <strong>Ashish Prajapati</strong>
+            <span>Roll: 0261CSIOT206</span>
+          </div>
+          <a href="project-details.html" class="btn btn-outline" style="padding: 6px 12px; font-size: 0.82rem;">
+            Details &rarr;
+          </a>
+        </div>
+      </article>
+
+      <!-- Project 4 (IoT) -->
+      <article class="project-card" data-category="iot" data-year="1">
+        <div class="card-header-bar">
+          <div class="card-badges-group">
+            <span class="pill-badge">IoT &amp; Hardware</span>
+            <span class="student-year-badge year-1">1st Year</span>
+          </div>
+          <div class="card-icon-tag">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="card-content-body">
+          <h2 class="project-heading">Automatic Plant Watering &amp; Soil Monitor</h2>
+          <p class="project-synopsis">
+            Arduino microcontroller project with soil moisture probe and water pump relay that waters campus garden beds when soil moisture drops below 30%.
+          </p>
+          <div class="stack-pills-wrap">
+            <span class="stack-mini-pill">Arduino UNO</span>
+            <span class="stack-mini-pill">Soil Sensor</span>
+            <span class="stack-mini-pill">Mini Pump</span>
+            <span class="stack-mini-pill">Embedded C</span>
+          </div>
+        </div>
+        <div class="card-footer-row">
+          <div class="author-meta-box">
+            <strong>Ashmit Tiwari</strong>
+            <span>Roll: 0261CSIOT219</span>
+          </div>
+          <a href="project-details.html" class="btn btn-outline" style="padding: 6px 12px; font-size: 0.82rem;">
+            Details &rarr;
+          </a>
+        </div>
+      </article>
+
+      <!-- Project 5 (Web) -->
+      <article class="project-card" data-category="web" data-year="3">
+        <div class="card-header-bar">
+          <div class="card-badges-group">
+            <span class="pill-badge">Web Development</span>
+            <span class="student-year-badge year-3">3rd Year</span>
+          </div>
+          <div class="card-icon-tag">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="card-content-body">
+          <h2 class="project-heading">College Computer Lab Slot Booking System</h2>
+          <p class="project-synopsis">
+            A web application allowing students to check free computer seats in college computer labs and reserve slots for coding practicals in advance.
+          </p>
+          <div class="stack-pills-wrap">
+            <span class="stack-mini-pill">HTML5</span>
+            <span class="stack-mini-pill">CSS Grid</span>
+            <span class="stack-mini-pill">JavaScript</span>
+            <span class="stack-mini-pill">LocalStorage</span>
+          </div>
+        </div>
+        <div class="card-footer-row">
+          <div class="author-meta-box">
+            <strong>Siddharth &amp; Priya</strong>
+            <span>B.Tech CSE &bull; Group 04</span>
+          </div>
+          <a href="project-details.html" class="btn btn-outline" style="padding: 6px 12px; font-size: 0.82rem;">
+            Details &rarr;
+          </a>
+        </div>
+      </article>
+
+      <!-- Project 6 (Automation) -->
+      <article class="project-card" data-category="automation" data-year="2">
+        <div class="card-header-bar">
+          <div class="card-badges-group">
+            <span class="pill-badge">Automation</span>
+            <span class="student-year-badge year-2">2nd Year</span>
+          </div>
+          <div class="card-icon-tag">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="card-content-body">
+          <h2 class="project-heading">Campus Lost &amp; Found Web Portal</h2>
+          <p class="project-synopsis">
+            An online notice board for students to post lost belongings (ID cards, bottles, notebooks) and help finders return items to owners safely.
+          </p>
+          <div class="stack-pills-wrap">
+            <span class="stack-mini-pill">HTML5</span>
+            <span class="stack-mini-pill">CSS3</span>
+            <span class="stack-mini-pill">JavaScript</span>
+            <span class="stack-mini-pill">Form Validation</span>
+          </div>
+        </div>
+        <div class="card-footer-row">
+          <div class="author-meta-box">
+            <strong>Neha &amp; Kabir</strong>
+            <span>B.Tech CSE &bull; Group 06</span>
+          </div>
+          <a href="project-details.html" class="btn btn-outline" style="padding: 6px 12px; font-size: 0.82rem;">
+            Details &rarr;
+          </a>
+        </div>
+      </article>
+    </div>
+
+    <!-- 2. Academic Table View -->
+    <div class="projects-table-view" id="projectsTableView">
+      <table class="academic-table">
+        <thead>
+          <tr>
+            <th>Project Title</th>
+            <th>Category</th>
+            <th>Student Year</th>
+            <th>Tech Stack</th>
+            <th>Student Name &amp; Roll No</th>
+            <th>Viva Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-category="web" data-year="4">
+            <td><strong>Student Project Showcase &amp; Evaluation Platform</strong></td>
+            <td><span class="pill-badge">Web Development</span></td>
+            <td><span class="student-year-badge year-4">Final Year (4th)</span></td>
+            <td>HTML5, CSS3, Vanilla JS, Web Audio</td>
+            <td>Ashish Ranjan &amp; Group 08</td>
+            <td><span style="color:var(--accent); font-weight:700;">Ongoing</span></td>
+            <td><a href="project-details.html" class="btn btn-outline" style="padding:4px 8px; font-size:0.75rem;">View</a></td>
+          </tr>
+          <tr data-category="web" data-year="3">
+            <td><strong>Student Notes &amp; Question Paper Portal</strong></td>
+            <td><span class="pill-badge">Web Development</span></td>
+            <td><span class="student-year-badge year-3">3rd Year</span></td>
+            <td>HTML5, CSS3, JavaScript</td>
+            <td>Arunima Bhardwaj (038), Aryan (058)</td>
+            <td><span style="color:#15803D; font-weight:600;">Grade A</span></td>
+            <td><a href="project-details.html" class="btn btn-outline" style="padding:4px 8px; font-size:0.75rem;">View</a></td>
+          </tr>
+          <tr data-category="automation" data-year="2">
+            <td><strong>QR Code Attendance Web System</strong></td>
+            <td><span class="pill-badge">Automation</span></td>
+            <td><span class="student-year-badge year-2">2nd Year</span></td>
+            <td>HTML5, JavaScript, Web API</td>
+            <td>Ashish Prajapati (206)</td>
+            <td><span style="color:#15803D; font-weight:600;">Grade A</span></td>
+            <td><a href="project-details.html" class="btn btn-outline" style="padding:4px 8px; font-size:0.75rem;">View</a></td>
+          </tr>
+          <tr data-category="iot" data-year="1">
+            <td><strong>Automatic Plant Watering System</strong></td>
+            <td><span class="pill-badge">IoT &amp; Hardware</span></td>
+            <td><span class="student-year-badge year-1">1st Year</span></td>
+            <td>Arduino, Soil Sensor, C</td>
+            <td>Ashmit Tiwari (219)</td>
+            <td><span style="color:#15803D; font-weight:600;">Grade A</span></td>
+            <td><a href="project-details.html" class="btn btn-outline" style="padding:4px 8px; font-size:0.75rem;">View</a></td>
+          </tr>
+          <tr data-category="web" data-year="3">
+            <td><strong>Computer Lab Slot Booking System</strong></td>
+            <td><span class="pill-badge">Web Development</span></td>
+            <td><span class="student-year-badge year-3">3rd Year</span></td>
+            <td>HTML5, CSS Grid, LocalStorage</td>
+            <td>Siddharth &amp; Priya</td>
+            <td><span style="color:#15803D; font-weight:600;">Grade A</span></td>
+            <td><a href="project-details.html" class="btn btn-outline" style="padding:4px 8px; font-size:0.75rem;">View</a></td>
+          </tr>
+          <tr data-category="automation" data-year="2">
+            <td><strong>Campus Lost &amp; Found Portal</strong></td>
+            <td><span class="pill-badge">Automation</span></td>
+            <td><span class="student-year-badge year-2">2nd Year</span></td>
+            <td>HTML5, CSS3, JavaScript</td>
+            <td>Neha &amp; Kabir</td>
+            <td><span style="color:#15803D; font-weight:600;">Grade A</span></td>
+            <td><a href="project-details.html" class="btn btn-outline" style="padding:4px 8px; font-size:0.75rem;">View</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Empty State when no results found -->
+    <div class="empty-results-box" id="emptyResultsBox">
+      <div class="empty-results-icon">
+        <svg class="svg-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+      <h3>No Projects Match Your Search</h3>
+      <p>Try searching for a different keyword or click below to clear your filters.</p>
+      <button class="btn btn-outline" id="clearSearchBtn">Reset Search &amp; Filters</button>
+    </div>
+  </main>
+
+  <!-- Compact 3D Origami-Folded Footer -->
+  <footer class="site-footer origami-footer" id="origamiFooter">
+    <div class="origami-shell">
+      <div class="origami-bar">
+        <div class="origami-brand-mini">
+          <span class="origami-crease-mark" aria-hidden="true"></span>
+          <span class="origami-title"><strong>Student Project Showcase</strong> &bull; Group 08</span>
+        </div>
+
+        <div class="origami-flaps" role="tablist" aria-label="Footer Information Flaps">
+          <button type="button" class="origami-flap-btn" data-flap="about" aria-expanded="false">
+            <span>About &amp; Team</span>
+            <svg class="svg-icon flap-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+
+          <button type="button" class="origami-flap-btn" data-flap="links" aria-expanded="false">
+            <span>Quick Links</span>
+            <svg class="svg-icon flap-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+
+          <button type="button" class="origami-flap-btn" data-flap="college" aria-expanded="false">
+            <span>College Info</span>
+            <svg class="svg-icon flap-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+
+          <button type="button" class="origami-flap-btn origami-unfold-all" data-flap="all" aria-expanded="false" title="Unfold all origami panels">
+            <span>Unfold All</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="origami-stage">
+        <div class="origami-panel" data-panel="about">
+          <div class="origami-panel-inner">
+            <div class="origami-panel-tag">01 / Project &amp; Team</div>
+            <p class="origami-desc">
+              A Web Designing (DCSE0152) Capstone Project developed by Group 08 students, Department of Computer Science &amp; Engineering (IoT), NIET Greater Noida.
+            </p>
+            <div class="origami-team-chips">
+              <span class="origami-chip-label">Team:</span>
+              <span class="origami-chip">Ashish Ranjan</span>
+              <span class="origami-chip">Ashish Prajapati</span>
+              <span class="origami-chip">Arunima Bhardwaj</span>
+              <span class="origami-chip">Aryan</span>
+              <span class="origami-chip">Ashmit Tiwari</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="origami-panel" data-panel="links">
+          <div class="origami-panel-inner">
+            <div class="origami-panel-tag">02 / Quick Links</div>
+            <ul class="origami-links-row">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="projects.html">Project Directory</a></li>
+              <li><a href="project-details.html">Case Study &amp; Rubric</a></li>
+              <li><a href="gallery.html">Circuit Schematics</a></li>
+              <li><a href="contact.html">Submit Project</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="origami-panel" data-panel="college">
+          <div class="origami-panel-inner">
+            <div class="origami-panel-tag">03 / College Information</div>
+            <div class="origami-meta-grid">
+              <div class="origami-meta-cell">
+                <span>Course</span>
+                <strong>DCSE0152 (Web Designing)</strong>
+              </div>
+              <div class="origami-meta-cell">
+                <span>Faculty Mentor</span>
+                <strong>Ms. Vishakha Rani</strong>
+              </div>
+              <div class="origami-meta-cell">
+                <span>Institution</span>
+                <strong>Noida Institute of Engineering &amp; Technology, Knowledge Park II, Greater Noida</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="origami-bottom-strip">
+        <span>&copy; 2026-27 Student Project Showcase &bull; Group 08 Capstone Team</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/projects.js"></script>
+</body>
+</html>

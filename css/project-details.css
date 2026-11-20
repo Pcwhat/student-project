@@ -1,0 +1,737 @@
+/* 
+   Web Designing Project (DCSE0152) - Capstone Showcase
+   Group 08 | NIET Greater Noida
+   Project Details Stylesheet (project-details.css)
+   Clean, Responsive Editorial Case Study Layout
+   Zero Unicode Emojis - Pure Hardware-Accelerated CSS
+*/
+
+/* Back Navigation Link */
+.detail-nav-back {
+  padding: 24px 0 16px;
+}
+
+.back-btn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.15s ease, color 0.2s ease;
+}
+
+.back-btn-link:hover {
+  color: var(--accent);
+  transform: translateX(-3px);
+}
+
+/* Case Study Hero Header */
+.case-study-hero {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 24px;
+  margin-bottom: 32px;
+}
+
+.case-study-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.case-study-header-text {
+  flex: 1 1 580px;
+  max-width: 820px;
+}
+
+.case-study-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.85rem, 3.8vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 12px 0 10px;
+  color: var(--text-primary);
+  letter-spacing: -0.015em;
+}
+
+.case-study-lead {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.case-study-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 4px;
+}
+
+/* Fluid, Balanced Two-Column Layout (Spacious, Never Cramped) */
+.case-study-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 350px;
+  gap: 36px;
+  align-items: start;
+  margin-bottom: 60px;
+}
+
+.case-study-main {
+  min-width: 0;
+  width: 100%;
+}
+
+/* Tabs Bar Container & Custom Horizontal Scrollbar */
+.case-study-tabs {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 24px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  padding-bottom: 8px;
+  padding-right: 6px;
+  /* Firefox Custom Scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(194, 65, 12, 0.42) #F5F2EB;
+}
+
+/* Right-end spacer so the last tab never touches the scroll boundary */
+.case-study-tabs::after {
+  content: "";
+  flex: 0 0 10px;
+  width: 10px;
+  display: block;
+}
+
+/* Chrome, Edge, Safari Custom Horizontal Scrollbar */
+.case-study-tabs::-webkit-scrollbar {
+  height: 6px;
+  display: block;
+}
+
+.case-study-tabs::-webkit-scrollbar-track {
+  background: #F5F2EB;
+  border-radius: 999px;
+  border: 1px solid #E7E2DA;
+}
+
+.case-study-tabs::-webkit-scrollbar-thumb {
+  background: rgba(194, 65, 12, 0.38);
+  border-radius: 999px;
+  border: 1px solid rgba(194, 65, 12, 0.15);
+  transition: background-color 0.2s ease;
+}
+
+.case-study-tabs::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 8px 13px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  white-space: nowrap;
+  border-radius: 6px 6px 0 0;
+  flex-shrink: 0;
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.tab-btn.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  background-color: var(--accent-subtle);
+}
+
+/* Tab Panes */
+.tab-pane {
+  display: none;
+  animation: fadeIn 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.article-body {
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 32px 34px;
+  box-shadow: var(--shadow-3d);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.article-body:hover {
+  box-shadow: var(--shadow-3d-hover);
+  border-color: var(--border-hover);
+}
+
+.article-body h2 {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 30px 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.article-body h2:first-of-type {
+  margin-top: 0;
+}
+
+.article-body h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 24px 0 10px;
+  color: var(--text-primary);
+}
+
+.article-body p {
+  color: var(--text-secondary);
+  font-size: 0.96rem;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.article-body ul, .article-body ol {
+  padding-left: 20px;
+  color: var(--text-secondary);
+  margin-bottom: 22px;
+}
+
+.article-body li {
+  margin-bottom: 10px;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Architecture Flow Box Container */
+.blueprint-box {
+  background-color: var(--accent-subtle);
+  border: 1px dashed var(--border-focus);
+  border-radius: var(--radius-sm);
+  padding: 28px 20px;
+  text-align: center;
+  margin: 24px 0 28px;
+  box-shadow: var(--shadow-3d-accent);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.blueprint-box:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-3d-accent-hover);
+}
+
+.blueprint-diagram {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+.diagram-node {
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  box-shadow: var(--shadow-3d-sm);
+  text-align: center;
+  min-width: 135px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.diagram-node:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-3d-sm-hover);
+}
+
+.diagram-node strong {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+}
+
+.diagram-node span {
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+.diagram-arrow {
+  color: var(--accent);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+/* =========================================================================
+   NEW: Dedicated Project Source Code Showcase Container (Spacious & Clean)
+   ========================================================================= */
+.code-showcase-box {
+  background-color: #1C1917;
+  border: 1px solid #292524;
+  border-radius: 10px;
+  margin: 24px 0 28px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(28, 25, 23, 0.14);
+}
+
+.code-showcase-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background-color: #141210;
+  border-bottom: 1px solid #292524;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.code-filename {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #FAF7F2;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.code-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(194, 65, 12, 0.25);
+  color: #FDBA74;
+  border: 1px solid rgba(253, 186, 116, 0.35);
+  padding: 2.5px 8px;
+  border-radius: 4px;
+}
+
+.code-block-pre {
+  margin: 0;
+  padding: 18px 20px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: #E7E5E4;
+  background: transparent;
+  tab-size: 2;
+}
+
+.code-block-pre code {
+  font-family: inherit;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+.code-c-kw { color: #FDBA74; font-weight: 600; }
+.code-c-fn { color: #93C5FD; }
+.code-c-str { color: #86EFAC; }
+.code-c-cm { color: #78716C; font-style: italic; }
+.code-c-num { color: #FCA5A5; }
+
+/* =========================================================================
+   NEW: Responsive Student Team Cards Grid (Tab 3: Team Attribution)
+   ========================================================================= */
+.student-team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 16px;
+  margin: 22px 0 28px;
+}
+
+.student-card {
+  background-color: #FAF7F2;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 16px 18px;
+  box-shadow: var(--shadow-3d-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.student-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-3d-sm-hover);
+  background-color: #FFFFFF;
+}
+
+.student-card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.student-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #F5F2EB;
+  border: 1px solid #E7E2DA;
+  color: var(--accent);
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 1.5px 1.5px 3px #E2DDD4, inset -1.5px -1.5px 3px #FFFFFF;
+  flex-shrink: 0;
+}
+
+.student-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+}
+
+.student-name {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.student-erp-pill {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent-subtle-text);
+  background-color: var(--accent-subtle);
+  padding: 1px 6px;
+  border-radius: 4px;
+  width: fit-content;
+  letter-spacing: 0.03em;
+}
+
+.student-role-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+
+.student-task-desc {
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Responsive Table Wrapper */
+.table-responsive-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin: 20px 0 24px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(28, 25, 23, 0.04);
+}
+
+.team-table {
+  width: 100%;
+  min-width: 580px;
+  border-collapse: collapse;
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.team-table th, .team-table td {
+  padding: 12px 14px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.team-table th {
+  background-color: var(--bg-color);
+  font-weight: 700;
+  font-family: var(--font-serif);
+  color: var(--text-primary);
+}
+
+.team-table tr:hover {
+  background-color: #FAF6F0;
+}
+
+/* =========================================================================
+   Sidebar Architecture & Widgets (Spacious & Balanced)
+   ========================================================================= */
+.case-study-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.sidebar-widget {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 22px 24px;
+  box-shadow: var(--shadow-3d);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.25s ease;
+}
+
+.sidebar-widget::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent) 0%, #EA580C 100%);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sidebar-widget:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-3d-hover);
+  border-color: rgba(194, 65, 12, 0.35);
+}
+
+.sidebar-widget:hover::before {
+  transform: scaleX(1);
+}
+
+.sidebar-widget h3 {
+  font-family: var(--font-serif);
+  font-size: 1.12rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-primary);
+}
+
+/* Mentor Verified Box */
+.mentor-stamp-box {
+  background-color: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: var(--shadow-3d-sm);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mentor-stamp-box:hover {
+  box-shadow: var(--shadow-3d-sm-hover);
+  border-color: #86EFAC;
+}
+
+.mentor-stamp-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #15803D 0%, #166534 100%);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(21, 128, 61, 0.25);
+}
+
+.mentor-stamp-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mentor-status-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #14532D;
+}
+
+.mentor-status-sub {
+  font-size: 0.8rem;
+  color: #166534;
+  font-weight: 500;
+}
+
+/* Academic Spec List (Clean Key-Value Spacing) */
+.spec-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.spec-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 0;
+  font-size: 0.88rem;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.spec-list li:last-child {
+  border-bottom: none;
+}
+
+.spec-label {
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.spec-val {
+  color: var(--text-primary);
+  font-weight: 600;
+  text-align: right;
+  word-break: break-word;
+}
+
+.spec-val.spec-grade {
+  color: #15803D;
+  font-weight: 700;
+}
+
+/* Technology Pills */
+.tech-pills-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.tech-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background-color: #FAF7F2;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.tech-pill:hover {
+  border-color: var(--accent);
+  background-color: var(--accent-subtle);
+  color: var(--accent-subtle-text);
+}
+
+/* =========================================================================
+   Responsive Breakpoints & Screen Adjustments
+   ========================================================================= */
+
+/* Medium Desktops & Split-Screen Viewports */
+@media (max-width: 1100px) {
+  .case-study-layout {
+    grid-template-columns: minmax(0, 1fr) 310px;
+    gap: 28px;
+  }
+}
+
+/* Tablets and Laptops <= 980px: Balanced Stack & Sidebar Grid */
+@media (max-width: 980px) {
+  .case-study-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .case-study-sidebar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+}
+
+/* Mobile Screens <= 868px: Mobile Hamburger Drawer & Touch Adjustments */
+@media (max-width: 868px) {
+  .detail-nav-back {
+    padding: 18px 0 12px;
+  }
+
+  .case-study-hero {
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+  }
+
+  .case-study-actions {
+    width: 100%;
+  }
+
+  .case-study-actions .btn {
+    flex: 1 1 auto;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .article-body {
+    padding: 22px 18px;
+  }
+
+  .blueprint-diagram {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .diagram-node {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .diagram-arrow {
+    transform: rotate(90deg);
+  }
+
+  .case-study-sidebar {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem("site_theme") || "light";
+        if (theme === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+          document.documentElement.removeAttribute("data-theme");
+        }
+        var fontSize = localStorage.getItem("site_font_size");
+        if (fontSize && fontSize !== "16") {
+          document.documentElement.setAttribute("data-font-size", fontSize);
+          document.documentElement.style.fontSize = fontSize + "px";
+        }
+        var fontPreset = localStorage.getItem("site_font_preset");
+        if (fontPreset && fontPreset !== "architectural-lab") {
+          document.documentElement.setAttribute("data-font-preset", fontPreset);
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Submit Project | Student Project Showcase</title>
+  <!-- Google Fonts: The Architectural Hardware Lab (Space Grotesk + DM Sans + Space Mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Space+Grotesk:wght@400..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/contact.css" />
+</head>
+<body>
+  <!-- Floating Navigation Bar (Pure Slider Feature Only) -->
+  <header class="site-header">
+    <div class="navbar">
+      <!-- Mobile Bar Header (Shown only on small screens) -->
+      <div class="mobile-nav-bar">
+        <span class="mobile-current-page" id="mobileCurrentPage">Submit / Contact</span>
+        <button class="mobile-toggle" id="mobileNavToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <svg class="svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Pure Slider Navigation -->
+      <nav class="nav-slider-nav" id="navSliderNav">
+        <div class="mobile-slider-hint" aria-hidden="true">
+          <span>Slide or tap to switch page</span>
+        </div>
+
+        <div class="nav-slider-container" id="navSliderContainer">
+          <!-- Previous Page Button -->
+          <button type="button" class="nav-arrow nav-arrow-prev" id="navSliderPrev" aria-label="Previous Page">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+
+          <!-- Slider Viewport Window -->
+          <div class="nav-slider-viewport" id="navSliderViewport" tabindex="0" aria-label="Page Slider Navigation">
+            <div class="nav-slider-center-pill" id="navSliderCenterPill" aria-hidden="true"></div>
+
+            <div class="nav-slider-track" id="navSliderTrack">
+              <a href="index.html" class="nav-slider-item" data-index="0" data-page="index.html" draggable="false">Home</a>
+              <a href="projects.html" class="nav-slider-item" data-index="1" data-page="projects.html" draggable="false">Projects</a>
+              <a href="project-details.html" class="nav-slider-item" data-index="2" data-page="project-details.html" draggable="false">Project Details</a>
+              <a href="gallery.html" class="nav-slider-item" data-index="3" data-page="gallery.html" draggable="false">Gallery</a>
+              <a href="contact.html" class="nav-slider-item" data-index="4" data-page="contact.html" draggable="false">Submit / Contact</a>
+            </div>
+          </div>
+
+          <!-- Next Page Button -->
+          <button type="button" class="nav-arrow nav-arrow-next" id="navSliderNext" aria-label="Next Page">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile Drawer Academic Metadata Card (Visible only inside mobile hamburger) -->
+        <div class="mobile-drawer-academic-card" aria-label="Academic Information">
+          <div class="drawer-academic-header">
+            <div class="drawer-brand-wrap">
+              <div class="drawer-brand-seal" aria-hidden="true">E</div>
+              <span class="drawer-brand-title">Student Showcase</span>
+            </div>
+            <span class="drawer-badge-live">AY 2026-27 ONGOING</span>
+          </div>
+
+          <div class="drawer-chips-cluster">
+            <div class="drawer-chip-item">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                <path d="M2 17l10 5 10-5"></path>
+                <path d="M2 12l10 5 10-5"></path>
+              </svg>
+              <div class="drawer-chip-text">
+                <span><strong>NIET</strong> Greater Noida</span>
+                <span style="color:var(--text-muted);">&bull; Autonomous</span>
+              </div>
+            </div>
+
+            <div class="drawer-chip-item">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+              <div class="drawer-chip-text">
+                <code>DCSE0152</code>
+                <span style="color:var(--text-muted);">&bull; Web Designing</span>
+              </div>
+            </div>
+
+            <div class="drawer-chip-item">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9 12 11 14 15 10"></polyline>
+              </svg>
+              <div class="drawer-chip-text">
+                <span><strong>Ms. Vishakha Rani</strong></span>
+                <span style="color:var(--text-muted);">&bull; Faculty Mentor</span>
+              </div>
+            </div>
+
+            <div class="drawer-chip-item">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+              <div class="drawer-chip-text">
+                <span><strong>Group 08</strong></span>
+                <span style="color:var(--text-muted);">&bull; Capstone Cohort</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="contact-hero">
+      <span class="pill-badge">PBL Capstone Portal &bull; AY 2026-27</span>
+      <h1>Student Project Submission &amp; Faculty Desk</h1>
+      <p>Register your group&rsquo;s engineering capstone for departmental evaluation, or reach out to faculty mentor Ms. Vishakha Rani for viva guidance and project queries.</p>
+
+      <!-- Interactive Mode Switcher -->
+      <div class="contact-mode-switcher" role="tablist" aria-label="Submission or Inquiry Mode">
+        <button type="button" class="mode-switch-btn active" id="modeBtnProject" data-mode="project" role="tab" aria-selected="true">
+          <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
+          Register Capstone Project
+        </button>
+        <button type="button" class="mode-switch-btn" id="modeBtnQuery" data-mode="query" role="tab" aria-selected="false">
+          <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          Faculty Mentor Desk &amp; Inquiry
+        </button>
+      </div>
+    </section>
+
+    <div class="contact-layout">
+      <!-- Main Content Form Section -->
+      <section class="form-card">
+        <!-- Unified Academic Draft & Storage Notice -->
+        <div class="draft-sync-bar" id="draftSyncBar">
+          <div class="draft-sync-left">
+            <span class="draft-live-dot" aria-hidden="true"></span>
+            <span class="draft-status-text" id="draftStatusText">Offline Storage Active &bull; All entries auto-saved on this device</span>
+          </div>
+          <button type="button" class="draft-clear-btn" id="draftClearBtn" title="Clear current draft">
+            Clear Draft
+          </button>
+        </div>
+
+        <!-- Success Toast Alert for Project Submission -->
+        <div class="alert-box" id="submissionSuccessAlert" role="alert">
+          <svg class="svg-icon alert-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <div class="alert-content">
+            <strong class="alert-title">Project Submitted Successfully!</strong>
+            <span class="alert-desc">Your project &ldquo;<span id="submittedProjectTitle"></span>&rdquo; has been registered and archived into local browser storage.</span>
+            <div class="alert-actions">
+              <span class="alert-ref-pill" id="submittedProjectRef">ID: PRJ-LIVE</span>
+              <a href="projects.html" class="alert-link-btn">View Projects Directory &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Success Toast Alert for Mentor Inquiry -->
+        <div class="alert-box" id="inquirySuccessAlert" role="alert">
+          <svg class="svg-icon alert-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <div class="alert-content">
+            <strong class="alert-title">Inquiry Dispatched to Mentor Desk!</strong>
+            <span class="alert-desc">Your query regarding &ldquo;<span id="submittedQuerySubject"></span>&rdquo; has been logged. Ms. Vishakha Rani can review it during lab consultation hours.</span>
+          </div>
+        </div>
+
+        <!-- Form 1: Capstone Project Submission -->
+        <form id="capstoneSubmissionForm" class="contact-active-form" novalidate>
+          <!-- Section 1: Team Attribution -->
+          <div class="form-section-header">
+            <span class="section-step-num">01</span>
+            <div class="section-step-text">
+              <h3>Student &amp; Team Attribution</h3>
+              <p>Primary contact developer and group details as registered with NIET portal.</p>
+            </div>
+          </div>
+
+          <div class="form-grid-inner">
+            <!-- Student Name -->
+            <div class="form-group">
+              <label class="form-label" for="studentName">
+                <span>Lead Student Name <span class="required-indicator">*</span></span>
+              </label>
+              <input type="text" id="studentName" class="form-input" placeholder="e.g. Ashish Ranjan" required />
+              <span class="field-error-msg" id="studentNameError"></span>
+            </div>
+
+            <!-- College ERP ID / Roll No -->
+            <div class="form-group">
+              <label class="form-label" for="erpId">
+                <span>College Roll No / ERP ID <span class="required-indicator">*</span></span>
+              </label>
+              <input type="text" id="erpId" class="form-input" placeholder="e.g. 0261CSIOT250" required />
+              <span class="field-error-msg" id="erpIdError"></span>
+            </div>
+
+            <!-- College Email -->
+            <div class="form-group">
+              <label class="form-label" for="studentEmail">
+                <span>College Email Address <span class="required-indicator">*</span></span>
+              </label>
+              <input type="email" id="studentEmail" class="form-input" placeholder="student@niet.co.in" required />
+              <span class="field-error-msg" id="studentEmailError"></span>
+            </div>
+
+            <!-- Group Number -->
+            <div class="form-group">
+              <label class="form-label" for="groupNo">
+                <span>Capstone Group Number</span>
+              </label>
+              <input type="text" id="groupNo" class="form-input" placeholder="e.g. Group - 08" value="Group - 08" />
+            </div>
+          </div>
+
+          <!-- Section 2: Project Specifications -->
+          <div class="form-section-header">
+            <span class="section-step-num">02</span>
+            <div class="section-step-text">
+              <h3>Project Specifications &amp; Repository</h3>
+              <p>Core problem title, category domain, and links to source code and demonstration.</p>
+            </div>
+          </div>
+
+          <div class="form-grid-inner">
+            <!-- Project Title -->
+            <div class="form-group col-span-2">
+              <label class="form-label" for="projectTitle">
+                <span>Project Title <span class="required-indicator">*</span></span>
+              </label>
+              <input type="text" id="projectTitle" class="form-input" placeholder="e.g. Student Project Showcase &amp; Evaluation Platform" required />
+              <span class="field-error-msg" id="projectTitleError"></span>
+            </div>
+
+            <!-- Project Category -->
+            <div class="form-group">
+              <label class="form-label" for="projectDomainTrigger">
+                <span>Project Category <span class="required-indicator">*</span></span>
+              </label>
+              <div class="custom-dropdown" id="projectDomainDropdown" data-select-id="projectDomain">
+                <select id="projectDomain" class="form-select visually-hidden-select" required tabindex="-1" aria-hidden="true">
+                  <option value="">Select Project Category...</option>
+                  <option value="Internet of Things (IoT)">Internet of Things (IoT)</option>
+                  <option value="Web Systems">Web Systems &amp; Portals</option>
+                  <option value="Embedded Automation">Embedded Automation</option>
+                  <option value="Hardware Architecture">Hardware Architecture</option>
+                </select>
+
+                <button type="button" 
+                        class="custom-dropdown-trigger" 
+                        id="projectDomainTrigger" 
+                        aria-haspopup="listbox" 
+                        aria-expanded="false" 
+                        aria-controls="projectDomainMenu"
+                        aria-label="Select Project Category">
+                  <span class="custom-dropdown-leading-icon" id="projectDomainTriggerIcon" aria-hidden="true">
+                    <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="3" width="7" height="7"></rect>
+                      <rect x="14" y="3" width="7" height="7"></rect>
+                      <rect x="14" y="14" width="7" height="7"></rect>
+                      <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                  </span>
+                  <span class="custom-dropdown-label is-placeholder" id="projectDomainTriggerLabel">Select Project Category...</span>
+                  <span class="custom-dropdown-chevron" aria-hidden="true">
+                    <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </button>
+
+                <div class="custom-dropdown-menu" id="projectDomainMenu" role="listbox" aria-labelledby="projectDomainTrigger" tabindex="-1">
+                  <button type="button" class="custom-dropdown-option" role="option" data-value="Internet of Things (IoT)" aria-selected="false">
+                    <span class="option-icon-box" aria-hidden="true">
+                      <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                        <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                        <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                        <line x1="12" y1="20" x2="12.01" y2="20"></line>
+                      </svg>
+                    </span>
+                    <span class="option-content">
+                      <span class="option-label">Internet of Things (IoT)</span>
+                      <span class="option-sub">Sensors, Microcontrollers &amp; Telemetry</span>
+                    </span>
+                    <span class="option-check" aria-hidden="true">
+                      <svg class="svg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </span>
+                  </button>
+
+                  <button type="button" class="custom-dropdown-option" role="option" data-value="Web Systems" aria-selected="false">
+                    <span class="option-icon-box" aria-hidden="true">
+                      <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                      </svg>
+                    </span>
+                    <span class="option-content">
+                      <span class="option-label">Web Systems &amp; Portals</span>
+                      <span class="option-sub">Dashboards, Cloud APIs &amp; Interfaces</span>
+                    </span>
+                    <span class="option-check" aria-hidden="true">
+                      <svg class="svg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </span>
+                  </button>
+
+                  <button type="button" class="custom-dropdown-option" role="option" data-value="Embedded Automation" aria-selected="false">
+                    <span class="option-icon-box" aria-hidden="true">
+                      <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                      </svg>
+                    </span>
+                    <span class="option-content">
+                      <span class="option-label">Embedded Automation</span>
+                      <span class="option-sub">Relays, Actuators &amp; Control Circuits</span>
+                    </span>
+                    <span class="option-check" aria-hidden="true">
+                      <svg class="svg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </span>
+                  </button>
+
+                  <button type="button" class="custom-dropdown-option" role="option" data-value="Hardware Architecture" aria-selected="false">
+                    <span class="option-icon-box" aria-hidden="true">
+                      <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                        <rect x="9" y="9" width="6" height="6"></rect>
+                        <line x1="9" y1="1" x2="9" y2="4"></line>
+                        <line x1="15" y1="1" x2="15" y2="4"></line>
+                        <line x1="9" y1="20" x2="9" y2="23"></line>
+                        <line x1="15" y1="20" x2="15" y2="23"></line>
+                        <line x1="20" y1="9" x2="23" y2="9"></line>
+                        <line x1="20" y1="14" x2="23" y2="14"></line>
+                        <line x1="1" y1="9" x2="4" y2="9"></line>
+                        <line x1="1" y1="14" x2="4" y2="14"></line>
+                      </svg>
+                    </span>
+                    <span class="option-content">
+                      <span class="option-label">Hardware Architecture</span>
+                      <span class="option-sub">PCB Layouts, Power &amp; Microchips</span>
+                    </span>
+                    <span class="option-check" aria-hidden="true">
+                      <svg class="svg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <span class="field-error-msg" id="projectDomainError"></span>
+            </div>
+
+            <!-- GitHub Code Link -->
+            <div class="form-group">
+              <label class="form-label" for="repoUrl">
+                <span>GitHub / Code Repository URL</span>
+              </label>
+              <input type="url" id="repoUrl" class="form-input" placeholder="https://github.com/niet-web-group08/student-project-showcase" />
+            </div>
+
+            <!-- Live Demo Link -->
+            <div class="form-group col-span-2">
+              <label class="form-label" for="demoUrl">
+                <span>Live Demonstration or Simulation Link (Optional)</span>
+              </label>
+              <input type="url" id="demoUrl" class="form-input" placeholder="https://showcase-portal.niet.local or live URL" />
+            </div>
+          </div>
+
+          <!-- Section 3: Tech Stack Chips Selector -->
+          <div class="form-section-header">
+            <span class="section-step-num">03</span>
+            <div class="section-step-text">
+              <h3>Hardware &amp; Software Tech Stack</h3>
+              <p>Click relevant technologies to attach them to your project synopsis.</p>
+            </div>
+          </div>
+
+          <div class="tech-selector-box">
+            <div class="tech-chips-palette" id="techChipsPalette">
+              <button type="button" class="tech-chip-toggle" data-tag="ESP32">ESP32</button>
+              <button type="button" class="tech-chip-toggle" data-tag="Arduino UNO">Arduino UNO</button>
+              <button type="button" class="tech-chip-toggle" data-tag="PIR HC-SR501">PIR HC-SR501</button>
+              <button type="button" class="tech-chip-toggle" data-tag="5V Relay Module">5V Relay Module</button>
+              <button type="button" class="tech-chip-toggle" data-tag="HTML5">HTML5</button>
+              <button type="button" class="tech-chip-toggle" data-tag="CSS3">CSS3</button>
+              <button type="button" class="tech-chip-toggle" data-tag="JavaScript">JavaScript</button>
+              <button type="button" class="tech-chip-toggle" data-tag="C++ Firmware">C++ Firmware</button>
+              <button type="button" class="tech-chip-toggle" data-tag="LocalStorage API">LocalStorage API</button>
+              <button type="button" class="tech-chip-toggle" data-tag="MQTT Protocol">MQTT Protocol</button>
+              <button type="button" class="tech-chip-toggle" data-tag="Wi-Fi Module">Wi-Fi Module</button>
+            </div>
+            <div class="selected-tags-strip" id="selectedTagsStrip">
+              <span class="tags-hint">Attached Technologies:</span>
+              <div class="selected-tags-list" id="selectedTagsList">
+                <span class="tags-empty-note">None selected yet (click chips above)</span>
+              </div>
+            </div>
+            <input type="hidden" id="selectedTagsHidden" value="" />
+          </div>
+
+          <!-- Section 4: Synopsis & Abstract -->
+          <div class="form-section-header">
+            <span class="section-step-num">04</span>
+            <div class="section-step-text">
+              <h3>Project Synopsis &amp; Abstract</h3>
+              <p>Outline the core engineering problem solved, methodology, and outcome.</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="projectAbstract">
+              <span>Project Description / Abstract <span class="required-indicator">*</span></span>
+              <span class="char-counter" id="charCounter">0 / 600 characters</span>
+            </label>
+            <textarea id="projectAbstract" class="form-textarea" rows="4" maxlength="600" placeholder="Briefly describe what problem your project solves, components or languages used, and results..." required></textarea>
+            <div class="abstract-progress-rail">
+              <div class="abstract-progress-fill" id="abstractProgressFill"></div>
+            </div>
+            <span class="field-error-msg" id="projectAbstractError"></span>
+          </div>
+
+          <!-- Form Submit Row -->
+          <div class="form-submit-row">
+            <div class="form-academic-disclaimer">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <span>Submissions are cataloged in browser memory under DCSE0152 course guidelines.</span>
+            </div>
+            <div class="form-actions-cluster">
+              <button type="button" class="btn btn-outline" id="saveDraftManualBtn">
+                Save Draft
+              </button>
+              <button type="submit" class="btn btn-primary" id="submitBtn">
+                <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                  <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                  <polyline points="7 3 7 8 15 8"></polyline>
+                </svg>
+                Submit Project Details
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Form 2: Mentor Inquiry Form (Initially Hidden) -->
+        <form id="mentorInquiryForm" class="contact-inactive-form" novalidate>
+          <div class="form-section-header">
+            <span class="section-step-num">01</span>
+            <div class="section-step-text">
+              <h3>Faculty Mentor Inquiry Desk</h3>
+              <p>Direct communication channel to Ms. Vishakha Rani for viva guidance and lab assistance.</p>
+            </div>
+          </div>
+
+          <div class="form-grid-inner">
+            <!-- Student Name -->
+            <div class="form-group">
+              <label class="form-label" for="queryStudentName">
+                <span>Student Name <span class="required-indicator">*</span></span>
+              </label>
+              <input type="text" id="queryStudentName" class="form-input" placeholder="e.g. Arunima Bhardwaj" required />
+              <span class="field-error-msg" id="queryStudentNameError"></span>
+            </div>
+
+            <!-- Roll Number -->
+            <div class="form-group">
+              <label class="form-label" for="queryErpId">
+                <span>Roll No / ERP ID <span class="required-indicator">*</span></span>
+              </label>
+              <input type="text" id="queryErpId" class="form-input" placeholder="e.g. 0261CSIOT205" required />
+              <span class="field-error-msg" id="queryErpIdError"></span>
+            </div>
+
+            <!-- College Email -->
+            <div class="form-group">
+              <label class="form-label" for="queryEmail">
+                <span>College Email Address <span class="required-indicator">*</span></span>
+              </label>
+              <input type="email" id="queryEmail" class="form-input" placeholder="student@niet.co.in" required />
+              <span class="field-error-msg" id="queryEmailError"></span>
+            </div>
+
+            <!-- Query Category -->
+            <div class="form-group">
+              <label class="form-label" for="queryCategoryTrigger">
+                <span>Query Subject / Topic <span class="required-indicator">*</span></span>
+              </label>
+              <div class="custom-dropdown" id="queryCategoryDropdown" data-select-id="queryCategory">
+                <select id="queryCategory" class="form-select visually-hidden-select" required tabindex="-1" aria-hidden="true">
+                  <option value="">Select Topic...</option>
+                  <option value="Viva Timetable &amp; Schedule">Viva Timetable &amp; Schedule</option>
+                  <option value="Hardware Lab &amp; Component Request">Hardware Lab &amp; Component Request</option>
+                  <option value="Project Synopsis Review">Project Synopsis Review</option>
+                  <option value="Code Review &amp; Architecture Advice">Code Review &amp; Architecture Advice</option>
+                  <option value="General Academic Guidance">General Academic Guidance</option>
+                </select>
+
+                <button type="button" 
+                        class="custom-dropdown-trigger" 
+                        id="queryCategoryTrigger" 
+                        aria-haspopup="listbox" 
+                        aria-expanded="false" 
+                        aria-controls="queryCategoryMenu"
+                        aria-label="Select Query Topic">
+                  <span class="custom-dropdown-leading-icon" id="queryCategoryTriggerIcon" aria-hidden="true">
+                    <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                  </span>
+                  <span class="custom-dropdown-label is-placeholder" id="queryCategoryTriggerLabel">Select Topic...</span>
+                  <span class="custom-dropdown-chevron" aria-hidden="true">
+                    <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </button>
+
+                <div class="custom-dropdown-menu" id="queryCategoryMenu" role="listbox" aria-labelledby="queryCategoryTrigger" tabindex="-1">
+                  <button type="button" class="custom-dropdown-option" role="option" data-value="Viva Timetable &amp; Schedule" aria-selected="false">
+                    <span class="option-icon-box" aria-hidden="true">
+                      <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                      </svg>
+                    </span>
+                    <span class="option-content">
+                      <span class="option-label">Viva Timetable &amp; Schedule</span>
+                      <span class="option-sub">Evaluation dates, batch timing &amp; slots</span>
+                    </span>
+                    <span class="option-check" aria-hidden="true">
+                      <svg class="svg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </span>
+                  </button>
+
+                  <button type="button" class="custom-dropdown-option" role="option" data-value="Hardware Lab &amp; Component Request" aria-selected="false">
+                    <span class="option-icon-box" aria-hidden="true">
+                      <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                      </svg>
+                    </span>
+                    <span class="option-content">
+                      <span class="option-label">Hardware Lab &amp; Component Request</span>
+                      <span class="option-sub">Sensors, breadboards &amp; lab instruments</span>
+                    </span>
+                    <span class="option-check" aria-hidden="true">
+                      <svg class="svg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </span>
+                  </button>
+
+                  <button type="button" class="custom-dropdown-option" role="option" data-value="Project Synopsis Review" aria-selected="false">
+                    <span class="option-icon-box" aria-hidden="true">
+                      <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                      </svg>
+                    </span>
+                    <span class="option-content">
+                      <span class="option-label">Project Synopsis Review</span>
+                      <span class="option-sub">Problem statement &amp; rubric alignment</span>
+                    </span>
+                    <span class="option-check" aria-hidden="true">
+                      <svg class="svg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </span>
+                  </button>
+
+                  <button type="button" class="custom-dropdown-option" role="option" data-value="Code Review &amp; Architecture Advice" aria-selected="false">
+                    <span class="option-icon-box" aria-hidden="true">
+                      <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="16 18 22 12 16 6"></polyline>
+                        <polyline points="8 6 2 12 8 18"></polyline>
+                      </svg>
+                    </span>
+                    <span class="option-content">
+                      <span class="option-label">Code Review &amp; Architecture Advice</span>
+                      <span class="option-sub">Firmware, logic &amp; API structure</span>
+                    </span>
+                    <span class="option-check" aria-hidden="true">
+                      <svg class="svg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </span>
+                  </button>
+
+                  <button type="button" class="custom-dropdown-option" role="option" data-value="General Academic Guidance" aria-selected="false">
+                    <span class="option-icon-box" aria-hidden="true">
+                      <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                      </svg>
+                    </span>
+                    <span class="option-content">
+                      <span class="option-label">General Academic Guidance</span>
+                      <span class="option-sub">Capstone format, references &amp; citations</span>
+                    </span>
+                    <span class="option-check" aria-hidden="true">
+                      <svg class="svg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <span class="field-error-msg" id="queryCategoryError"></span>
+            </div>
+
+            <!-- Query Message -->
+            <div class="form-group col-span-2">
+              <label class="form-label" for="queryMessage">
+                <span>Detailed Question / Request <span class="required-indicator">*</span></span>
+              </label>
+              <textarea id="queryMessage" class="form-textarea" rows="5" placeholder="Specify your group number, current project milestone, and exact guidance required..." required></textarea>
+              <span class="field-error-msg" id="queryMessageError"></span>
+            </div>
+          </div>
+
+          <div class="form-submit-row">
+            <div class="form-academic-disclaimer">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <span>Faculty consultation hours: Monday &ndash; Friday, 2:00 PM &ndash; 4:30 PM (Room 304 Block B).</span>
+            </div>
+            <button type="submit" class="btn btn-primary" id="querySubmitBtn">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+              Send Mentor Message
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Sidebar -->
+      <aside class="contact-sidebar">
+        <!-- Faculty Information Card -->
+        <div class="info-card">
+          <div class="info-card-header">
+            <h3>Faculty Mentor Desk</h3>
+            <span class="eval-live-badge">Consultation Open</span>
+          </div>
+          <div class="mentor-contact-profile">
+            <div class="mentor-avatar-badge" aria-hidden="true">VR</div>
+            <div>
+              <strong class="mentor-profile-name">Ms. Vishakha Rani</strong>
+              <span class="mentor-profile-sub">Faculty Guide &bull; Viva Evaluator</span>
+            </div>
+          </div>
+          <ul class="contact-meta-list">
+            <li>
+              <strong>Course &amp; Department</strong>
+              <span>DCSE0152 (Web Designing) &bull; B.Tech CSE (IoT)</span>
+            </li>
+            <li>
+              <strong>Office Location</strong>
+              <span>Room 304, Block B (IoT Center of Excellence)<br>NIET Campus, Knowledge Park II</span>
+            </li>
+            <li>
+              <strong>Consultation Hours</strong>
+              <span>Monday &ndash; Friday &bull; 02:00 PM &ndash; 04:30 PM</span>
+            </li>
+            <li>
+              <strong>Institutional Email</strong>
+              <span style="font-family:var(--font-mono); font-size:0.84rem; color:var(--accent);">vishakha.rani@niet.co.in</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Viva Evaluation Checklist Card -->
+        <div class="info-card">
+          <h3>Viva Submission Checklist</h3>
+          <ul class="checklist-items">
+            <li>
+              <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#15803D" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Verified working prototype or web simulator code</span>
+            </li>
+            <li>
+              <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#15803D" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Public GitHub repository with documentation README</span>
+            </li>
+            <li>
+              <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#15803D" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Minimum 50-word synopsis explaining hardware/software design</span>
+            </li>
+            <li>
+              <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#15803D" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Valid 10-digit NIET ERP roll number verified</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Saved Submissions in Local Storage -->
+        <div class="info-card">
+          <div class="info-card-header">
+            <h3>Saved on This Device</h3>
+            <div class="ledger-actions-strip">
+              <button type="button" class="ledger-action-btn" id="exportSubmissionsBtn" title="Export as JSON">
+                Export JSON
+              </button>
+              <button type="button" class="ledger-action-btn" id="clearAllSubmissionsBtn" title="Clear all local submissions">
+                Clear
+              </button>
+            </div>
+          </div>
+          <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:12px;">
+            Archived capstone projects saved in your browser storage:
+          </p>
+          <div class="local-submissions-wrap" id="localSubmissionsList">
+            <!-- Dynamically populated by contact.js -->
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Compact 3D Origami-Folded Footer -->
+  <footer class="site-footer origami-footer" id="origamiFooter">
+    <div class="origami-shell">
+      <div class="origami-bar">
+        <div class="origami-brand-mini">
+          <span class="origami-crease-mark" aria-hidden="true"></span>
+          <span class="origami-title"><strong>Student Project Showcase</strong> &bull; Group 08</span>
+        </div>
+
+        <div class="origami-flaps" role="tablist" aria-label="Footer Information Flaps">
+          <button type="button" class="origami-flap-btn" data-flap="about" aria-expanded="false">
+            <span>About &amp; Team</span>
+            <svg class="svg-icon flap-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+
+          <button type="button" class="origami-flap-btn" data-flap="links" aria-expanded="false">
+            <span>Quick Links</span>
+            <svg class="svg-icon flap-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+
+          <button type="button" class="origami-flap-btn" data-flap="college" aria-expanded="false">
+            <span>College Info</span>
+            <svg class="svg-icon flap-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+
+          <button type="button" class="origami-flap-btn origami-unfold-all" data-flap="all" aria-expanded="false" title="Unfold all origami panels">
+            <span>Unfold All</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="origami-stage">
+        <div class="origami-panel" data-panel="about">
+          <div class="origami-panel-inner">
+            <div class="origami-panel-tag">01 / Project &amp; Team</div>
+            <p class="origami-desc">
+              A Web Designing (DCSE0152) Capstone Project developed by Group 08 students, Department of Computer Science &amp; Engineering (IoT), NIET Greater Noida.
+            </p>
+            <div class="origami-team-chips">
+              <span class="origami-chip-label">Team:</span>
+              <span class="origami-chip">Ashish Ranjan</span>
+              <span class="origami-chip">Ashish Prajapati</span>
+              <span class="origami-chip">Arunima Bhardwaj</span>
+              <span class="origami-chip">Aryan</span>
+              <span class="origami-chip">Ashmit Tiwari</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="origami-panel" data-panel="links">
+          <div class="origami-panel-inner">
+            <div class="origami-panel-tag">02 / Quick Links</div>
+            <ul class="origami-links-row">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="projects.html">Project Directory</a></li>
+              <li><a href="project-details.html">Case Study &amp; Rubric</a></li>
+              <li><a href="gallery.html">Circuit Schematics</a></li>
+              <li><a href="contact.html">Submit Project</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="origami-panel" data-panel="college">
+          <div class="origami-panel-inner">
+            <div class="origami-panel-tag">03 / College Information</div>
+            <div class="origami-meta-grid">
+              <div class="origami-meta-cell">
+                <span>Course</span>
+                <strong>DCSE0152 (Web Designing)</strong>
+              </div>
+              <div class="origami-meta-cell">
+                <span>Faculty Mentor</span>
+                <strong>Ms. Vishakha Rani</strong>
+              </div>
+              <div class="origami-meta-cell">
+                <span>Institution</span>
+                <strong>Noida Institute of Engineering &amp; Technology, Knowledge Park II, Greater Noida</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="origami-bottom-strip">
+        <span>&copy; 2026-27 Student Project Showcase &bull; Group 08 Capstone Team</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/contact.js"></script>
+</body>
+</html>

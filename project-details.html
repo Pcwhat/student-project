@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem("site_theme") || "light";
+        if (theme === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+          document.documentElement.removeAttribute("data-theme");
+        }
+        var fontSize = localStorage.getItem("site_font_size");
+        if (fontSize && fontSize !== "16") {
+          document.documentElement.setAttribute("data-font-size", fontSize);
+          document.documentElement.style.fontSize = fontSize + "px";
+        }
+        var fontPreset = localStorage.getItem("site_font_preset");
+        if (fontPreset && fontPreset !== "architectural-lab") {
+          document.documentElement.setAttribute("data-font-preset", fontPreset);
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Project Showcase &amp; Evaluation Platform | Group 08 Capstone</title>
+  <!-- Google Fonts: The Architectural Hardware Lab (Space Grotesk + DM Sans + Space Mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Space+Grotesk:wght@400..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/project-details.css" />
+</head>
+<body>
+  <!-- Floating Navigation Bar (Pure Slider Feature Only) -->
+  <header class="site-header">
+    <div class="navbar">
+      <!-- Mobile Bar Header (Shown only on small screens) -->
+      <div class="mobile-nav-bar">
+        <span class="mobile-current-page" id="mobileCurrentPage">Project Details</span>
+        <button class="mobile-toggle" id="mobileNavToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <svg class="svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Pure Slider Navigation -->
+      <nav class="nav-slider-nav" id="navSliderNav">
+        <div class="mobile-slider-hint" aria-hidden="true">
+          <span>Slide or tap to switch page</span>
+        </div>
+
+        <div class="nav-slider-container" id="navSliderContainer">
+          <!-- Previous Page Button -->
+          <button type="button" class="nav-arrow nav-arrow-prev" id="navSliderPrev" aria-label="Previous Page">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+
+          <!-- Slider Viewport Window -->
+          <div class="nav-slider-viewport" id="navSliderViewport" tabindex="0" aria-label="Page Slider Navigation">
+            <div class="nav-slider-center-pill" id="navSliderCenterPill" aria-hidden="true"></div>
+
+            <div class="nav-slider-track" id="navSliderTrack">
+              <a href="index.html" class="nav-slider-item" data-index="0" data-page="index.html" draggable="false">Home</a>
+              <a href="projects.html" class="nav-slider-item" data-index="1" data-page="projects.html" draggable="false">Projects</a>
+              <a href="project-details.html" class="nav-slider-item" data-index="2" data-page="project-details.html" draggable="false">Project Details</a>
+              <a href="gallery.html" class="nav-slider-item" data-index="3" data-page="gallery.html" draggable="false">Gallery</a>
+              <a href="contact.html" class="nav-slider-item" data-index="4" data-page="contact.html" draggable="false">Submit / Contact</a>
+            </div>
+          </div>
+
+          <!-- Next Page Button -->
+          <button type="button" class="nav-arrow nav-arrow-next" id="navSliderNext" aria-label="Next Page">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile Drawer Academic Metadata Card (Visible only inside mobile hamburger) -->
+        <div class="mobile-drawer-academic-card" aria-label="Academic Information">
+          <div class="drawer-academic-header">
+            <div class="drawer-brand-wrap">
+              <div class="drawer-brand-seal" aria-hidden="true">E</div>
+              <span class="drawer-brand-title">Student Showcase</span>
+            </div>
+            <span class="drawer-badge-live">AY 2026-27 ONGOING</span>
+          </div>
+
+          <div class="drawer-chips-cluster">
+            <div class="drawer-chip-item">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                <path d="M2 17l10 5 10-5"></path>
+                <path d="M2 12l10 5 10-5"></path>
+              </svg>
+              <div class="drawer-chip-text">
+                <span><strong>NIET</strong> Greater Noida</span>
+                <span style="color:var(--text-muted);">&bull; Autonomous</span>
+              </div>
+            </div>
+
+            <div class="drawer-chip-item">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+              <div class="drawer-chip-text">
+                <code class="academic-code">DCSE0152</code>
+                <span>Web Designing</span>
+              </div>
+            </div>
+
+            <div class="drawer-chip-item">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <polyline points="9 12 11 14 15 10"></polyline>
+              </svg>
+              <div class="drawer-chip-text">
+                <span>Mentor: <strong>Ms. Vishakha Rani</strong></span>
+              </div>
+            </div>
+
+            <div class="drawer-chip-item">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+              <div class="drawer-chip-text">
+                <span>Cohort: <strong>Group 08</strong> (CSE IoT)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Back Navigation Link -->
+    <div class="detail-nav-back">
+      <a href="projects.html" class="back-btn-link">
+        <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back to Project Directory
+      </a>
+    </div>
+
+    <!-- Case Study Header -->
+    <section class="case-study-hero">
+      <div class="case-study-top">
+        <div class="case-study-header-text">
+          <span class="pill-badge pill-success">Group 08 Main Project &bull; Case Study</span>
+          <h1 class="case-study-title">Student Project Showcase &amp; Evaluation Platform</h1>
+          <p class="case-study-lead">
+            A responsive, high-performance academic web portal engineered to archive, search, and present student engineering capstone projects with real-time academic rubric evaluation, customizable theme engines, mechanical acoustics, and interactive project directories.
+          </p>
+        </div>
+        <div class="case-study-actions">
+          <a href="projects.html" class="btn btn-primary">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            Explore Directory
+          </a>
+          <a href="#tab-rubric" class="btn btn-outline" id="viewRubricBtn" onclick="document.querySelector('[data-tab=\'tab-rubric\']').click(); return false;">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Evaluation Rubric
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Two-Column Case Study Layout -->
+    <div class="case-study-layout">
+      <!-- Main Content Tabs -->
+      <section class="case-study-main">
+        <div class="case-study-tabs" role="tablist">
+          <button class="tab-btn active" data-tab="tab-overview" role="tab">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+            1. Project Overview
+          </button>
+          <button class="tab-btn" data-tab="tab-architecture" role="tab">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+            2. System Architecture
+          </button>
+          <button class="tab-btn" data-tab="tab-team" role="tab">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            3. Team Members &amp; Roles
+          </button>
+          <button class="tab-btn" data-tab="tab-rubric" role="tab">
+            <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            4. Viva Scoring Rubric
+          </button>
+        </div>
+
+        <!-- Tab 1: Project Overview -->
+        <article class="tab-pane active article-body" id="tab-overview">
+          <h2>1. Academic Motivation &amp; Problem Statement</h2>
+          <p>
+            In university engineering institutions, student capstone and Project-Based Learning (PBL) submissions are conventionally documented on physical paper binders, isolated personal flash drives, or fragmented local folders. This traditional workflow poses critical challenges:
+          </p>
+          <ul>
+            <li><strong>Evaluation Bottlenecks:</strong> Faculty evaluators lack a unified, accessible digital dashboard to grade student submissions against transparent departmental rubrics.</li>
+            <li><strong>Viva Examiner Friction:</strong> External viva panels cannot quickly examine technical code architectures, live prototypes, and component schematics during scheduled evaluation sessions.</li>
+            <li><strong>Archive &amp; Knowledge Gaps:</strong> Junior cohorts (1st, 2nd, and 3rd-year engineering students) have no institutional showcase to discover previous projects, examine faculty-verified standards, or build upon proven work.</li>
+          </ul>
+          <p>
+            To resolve these challenges, Group 08 engineered the <strong>Student Project Showcase &amp; Evaluation Platform</strong> — a lightweight, zero-dependency academic web portal designed for Course DCSE0152 (Web Designing) and departmental capstone evaluations.
+          </p>
+
+          <h2>2. Core Architectural Pillars</h2>
+          <ul>
+            <li><strong>Infinite Circular Flywheel Directory:</strong> Smooth inertia flywheel slider paired with multi-factor filtering by domain (IoT, Web, Automation) and academic year (1st, 2nd, 3rd, Final Year) with zero layout shifting.</li>
+            <li><strong>Synthesized Web Audio Acoustics:</strong> Procedural sound generator utilizing the browser Web Audio API to produce authentic mechanical tactile feedback on slider notches and button presses without external audio assets.</li>
+            <li><strong>Dual High-Contrast Design System:</strong> Two accessible themes — Warm Ivory Clay (default light) and Obsidian Charcoal Black (dark) — with manual root scaling (14px–20px) and typographic combinations.</li>
+            <li><strong>Standardized Viva Rubric Matrix:</strong> Comprehensive grading breakdown aligned with departmental evaluation parameters: UI Design, Code Quality, Working Functionality, and Viva Defense.</li>
+          </ul>
+
+          <h2>3. Project Results &amp; Testing</h2>
+          <p>
+            The platform was tested across desktop and mobile browsers (Chrome, Edge, Firefox, Safari) and achieved 100% responsive fluid layout scaling, sub-16ms smooth 60fps momentum animations, and full WCAG color contrast compliance across both Light and Dark themes.
+          </p>
+        </article>
+
+        <!-- Tab 2: System Architecture -->
+        <article class="tab-pane article-body" id="tab-architecture">
+          <h2>Frontend Architecture &amp; State Pipeline</h2>
+          <p>
+            The project follows clean architectural modularity with zero third-party framework overhead:
+          </p>
+
+          <div class="blueprint-box">
+            <span class="pill-badge">System Data Flow</span>
+            <div class="blueprint-diagram">
+              <div class="diagram-node">
+                <strong>Settings State</strong>
+                <span>Theme &bull; Font &bull; Audio</span>
+              </div>
+              <div class="diagram-arrow">&rarr;</div>
+              <div class="diagram-node">
+                <strong>Web Audio API</strong>
+                <span>Synthesized Feedback</span>
+              </div>
+              <div class="diagram-arrow">&rarr;</div>
+              <div class="diagram-node">
+                <strong>Filter Controller</strong>
+                <span>Search &bull; Year &bull; Domain</span>
+              </div>
+              <div class="diagram-arrow">&rarr;</div>
+              <div class="diagram-node">
+                <strong>Responsive DOM</strong>
+                <span>Card Grid &bull; Rubric</span>
+              </div>
+            </div>
+            <span style="font-size:0.8rem; color:var(--text-secondary);">Pure Client-Side Architecture &bull; Vanilla JavaScript ES6 &bull; Web Audio API &bull; CSS Custom Properties</span>
+          </div>
+
+          <h2>Key Engineering Components</h2>
+          <ul>
+            <li><strong>Semantic HTML5 &amp; WCAG Accessibility:</strong> Native modal overlays, accessible ARIA radio-groups, proper tab semantics, and clean keyboard navigation.</li>
+            <li><strong>CSS Custom Property Design Tokens:</strong> Three-layer variable token architecture ensuring instant, zero-flicker transitions between Warm Ivory and Charcoal Black.</li>
+            <li><strong>Procedural Acoustics Generator:</strong> Dynamic Web Audio API biquad filters and exponential gain envelopes that synthesize mechanical clicks without external audio files.</li>
+            <li><strong>Multi-Factor Search &amp; Year Filter:</strong> Live regex word matching with highlight markers that seamlessly combines category and student academic year filters.</li>
+          </ul>
+
+          <h2>Core Web Audio Synthesizer Code</h2>
+          <p>
+            The procedural acoustic synthesizer powers mechanical feedback across all sliders and interactive elements:
+          </p>
+
+          <div class="code-showcase-box">
+            <div class="code-showcase-header">
+              <div class="code-filename">
+                <svg class="svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+                <span>MechanicalAudioEngine.js</span>
+              </div>
+              <span class="code-badge">JavaScript / Web Audio API</span>
+            </div>
+            <pre class="code-block-pre"><code><span class="code-c-cm">// Group 08 - Procedural Web Audio API Sound Synthesizer</span>
+<span class="code-c-cm">// Zero external audio files; 100% procedurally synthesized acoustics</span>
+<span class="code-c-kw">const</span> audioCtx = <span class="code-c-kw">new</span> (<span class="code-c-kw">window</span>.AudioContext || <span class="code-c-kw">window</span>.webkitAudioContext)();
+
+<span class="code-c-kw">function</span> <span class="code-c-fn">playScrollTick</span>(volumeScale = <span class="code-c-num">1.0</span>) {
+  <span class="code-c-kw">if</span> (audioCtx.state === <span class="code-c-str">"suspended"</span>) audioCtx.<span class="code-c-fn">resume</span>();
+  <span class="code-c-kw">const</span> now = audioCtx.currentTime;
+
+  <span class="code-c-cm">// High-frequency mechanical contact transient</span>
+  <span class="code-c-kw">const</span> osc = audioCtx.<span class="code-c-fn">createOscillator</span>();
+  <span class="code-c-kw">const</span> gain = audioCtx.<span class="code-c-fn">createGain</span>();
+  <span class="code-c-kw">const</span> filter = audioCtx.<span class="code-c-fn">createBiquadFilter</span>();
+
+  filter.type = <span class="code-c-str">"bandpass"</span>;
+  filter.frequency.<span class="code-c-fn">setValueAtTime</span>(<span class="code-c-num">2400</span>, now);
+  filter.Q.<span class="code-c-fn">setValueAtTime</span>(<span class="code-c-num">4.2</span>, now);
+
+  osc.type = <span class="code-c-str">"sine"</span>;
+  osc.frequency.<span class="code-c-fn">setValueAtTime</span>(<span class="code-c-num">1850</span>, now);
+  osc.frequency.<span class="code-c-fn">exponentialRampToValueAtTime</span>(<span class="code-c-num">320</span>, now + <span class="code-c-num">0.022</span>);
+
+  gain.gain.<span class="code-c-fn">setValueAtTime</span>(<span class="code-c-num">0.09</span> * volumeScale, now);
+  gain.gain.<span class="code-c-fn">exponentialRampToValueAtTime</span>(<span class="code-c-num">0.0001</span>, now + <span class="code-c-num">0.028</span>);
+
+  osc.<span class="code-c-fn">connect</span>(filter);
+  filter.<span class="code-c-fn">connect</span>(gain);
+  gain.<span class="code-c-fn">connect</span>(audioCtx.destination);
+
+  osc.<span class="code-c-fn">start</span>(now);
+  osc.<span class="code-c-fn">stop</span>(now + <span class="code-c-num">0.03</span>);
+}</code></pre>
+          </div>
+        </article>
+
+        <!-- Tab 3: Team Attribution -->
+        <article class="tab-pane article-body" id="tab-team">
+          <h2>Group 08 - Team Members &amp; Contributions</h2>
+          <p>
+            Capstone Engineering Project submitted for Course Web Designing (DCSE0152), B.Tech CSE (IoT) at NIET Greater Noida under the faculty mentorship of Ms. Vishakha Rani:
+          </p>
+
+          <!-- Responsive Student Team Contributor Cards Grid -->
+          <div class="student-team-grid">
+            <!-- Student 1 -->
+            <div class="student-card">
+              <div class="student-card-top">
+                <div class="student-avatar" aria-hidden="true">AR</div>
+                <div class="student-identity">
+                  <span class="student-name">Ashish Ranjan</span>
+                  <span class="student-erp-pill">0261CSIOT250</span>
+                </div>
+              </div>
+              <span class="student-role-badge">Team Lead &bull; Architecture</span>
+              <p class="student-task-desc">
+                Project systems architecture, Web Audio API synthesis engine, flywheel inertia physics, and state coordination.
+              </p>
+            </div>
+
+            <!-- Student 2 -->
+            <div class="student-card">
+              <div class="student-card-top">
+                <div class="student-avatar" aria-hidden="true">AP</div>
+                <div class="student-identity">
+                  <span class="student-name">Ashish Prajapati</span>
+                  <span class="student-erp-pill">0261CSIOT206</span>
+                </div>
+              </div>
+              <span class="student-role-badge">Frontend UI Lead</span>
+              <p class="student-task-desc">
+                Responsive design token system, CSS Grid/Flex layouts, floating slider navigation bar, and dual-theme styling.
+              </p>
+            </div>
+
+            <!-- Student 3 -->
+            <div class="student-card">
+              <div class="student-card-top">
+                <div class="student-avatar" aria-hidden="true">AB</div>
+                <div class="student-identity">
+                  <span class="student-name">Arunima Bhardwaj</span>
+                  <span class="student-erp-pill">0261CSIOT038</span>
+                </div>
+              </div>
+              <span class="student-role-badge">JS Interactivity Lead</span>
+              <p class="student-task-desc">
+                Dynamic regex search highlighting, student academic year filtering logic, and tabbed view state management.
+              </p>
+            </div>
+
+            <!-- Student 4 -->
+            <div class="student-card">
+              <div class="student-card-top">
+                <div class="student-avatar" aria-hidden="true">A</div>
+                <div class="student-identity">
+                  <span class="student-name">Aryan</span>
+                  <span class="student-erp-pill">0261CSIOT058</span>
+                </div>
+              </div>
+              <span class="student-role-badge">Technical Documentation</span>
+              <p class="student-task-desc">
+                PBL capstone report compilation, syllabus alignment, viva defense questionnaire, and rubric criteria drafting.
+              </p>
+            </div>
+
+            <!-- Student 5 -->
+            <div class="student-card">
+              <div class="student-card-top">
+                <div class="student-avatar" aria-hidden="true">AT</div>
+                <div class="student-identity">
+                  <span class="student-name">Ashmit Tiwari</span>
+                  <span class="student-erp-pill">0261CSIOT219</span>
+                </div>
+              </div>
+              <span class="student-role-badge">Testing &amp; QA</span>
+              <p class="student-task-desc">
+                Cross-browser responsive testing, WCAG contrast auditing, mechanical audio calibration, and verification test matrices.
+              </p>
+            </div>
+          </div>
+
+          <h3>Official Assessment Record Table</h3>
+          <div class="table-responsive-wrapper">
+            <table class="team-table">
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>College ERP ID</th>
+                  <th>Project Role</th>
+                  <th>Key Tasks Completed</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Ashish Ranjan</strong></td>
+                  <td><code class="academic-code">0261CSIOT250</code></td>
+                  <td>Team Lead &amp; Architecture</td>
+                  <td>Systems architecture, Web Audio API synthesis, flywheel inertia physics, and state coordination.</td>
+                </tr>
+                <tr>
+                  <td><strong>Ashish Prajapati</strong></td>
+                  <td><code class="academic-code">0261CSIOT206</code></td>
+                  <td>Frontend UI Lead</td>
+                  <td>Responsive design tokens, CSS Grid/Flex layouts, floating navigation bar, and dual-theme styling.</td>
+                </tr>
+                <tr>
+                  <td><strong>Arunima Bhardwaj</strong></td>
+                  <td><code class="academic-code">0261CSIOT038</code></td>
+                  <td>JS Interactivity Lead</td>
+                  <td>Dynamic regex search highlights, student academic year filtering logic, and tabbed view switching.</td>
+                </tr>
+                <tr>
+                  <td><strong>Aryan</strong></td>
+                  <td><code class="academic-code">0261CSIOT058</code></td>
+                  <td>Documentation</td>
+                  <td>Capstone documentation, syllabus mapping, viva defense questionnaire, and rubric criteria drafting.</td>
+                </tr>
+                <tr>
+                  <td><strong>Ashmit Tiwari</strong></td>
+                  <td><code class="academic-code">0261CSIOT219</code></td>
+                  <td>Testing &amp; QA</td>
+                  <td>Cross-browser testing, WCAG contrast auditing, mechanical audio calibration, and verification matrices.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="font-size:0.85rem; color:var(--text-secondary); margin-top:10px;">
+            Academic Year: <strong>2026-27</strong> &bull; Department of Computer Science &amp; Engineering (IoT).
+          </p>
+        </article>
+
+        <!-- Tab 4: Viva Rubric -->
+        <article class="tab-pane article-body" id="tab-rubric">
+          <h2>Capstone Viva Evaluation Rubric (Academic Year 2026-27)</h2>
+          <p>Marking breakdown and assessment criteria used during faculty review:</p>
+
+          <div class="table-responsive-wrapper">
+            <table class="team-table">
+              <thead>
+                <tr>
+                  <th>Assessment Component</th>
+                  <th>Max Marks</th>
+                  <th>Evaluation Criteria</th>
+                  <th>Current Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>UI Design &amp; Responsiveness</strong></td>
+                  <td>25</td>
+                  <td>Clean layout, mobile responsiveness, accessible typography, and dual high-contrast themes.</td>
+                  <td><span class="pill-badge pill-success">Under Review</span></td>
+                </tr>
+                <tr>
+                  <td><strong>HTML, CSS &amp; JS Code Quality</strong></td>
+                  <td>30</td>
+                  <td>Semantic HTML5 tags, CSS variable token system, modular zero-dependency vanilla JS, clean comments.</td>
+                  <td><span class="pill-badge pill-success">Under Review</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Working Logic &amp; Functionality</strong></td>
+                  <td>25</td>
+                  <td>Infinite flywheel category discovery, multi-factor year filtering, Web Audio synthesizer, and modal dialogs.</td>
+                  <td><span class="pill-badge pill-success">Under Review</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Viva Defense &amp; Documentation</strong></td>
+                  <td>20</td>
+                  <td>Live architecture presentation, comprehensive case study documentation, and technical questionnaire defense.</td>
+                  <td><span class="pill-badge pill-success">Under Review</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="margin-top:14px; font-weight:700; color:var(--accent);">
+            Viva Evaluation Status: Ongoing &bull; Academic Year 2026-27
+          </p>
+        </article>
+      </section>
+
+      <!-- Sidebar (Comfortable 350px Column with Zero Congestion) -->
+      <aside class="case-study-sidebar">
+        <!-- Faculty Mentor Card -->
+        <div class="sidebar-widget">
+          <h3>
+            <svg class="svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            Faculty Mentor
+          </h3>
+          <div class="mentor-stamp-box">
+            <div class="mentor-stamp-icon" aria-hidden="true">
+              <svg class="svg-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="2.5">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <div class="mentor-stamp-text">
+              <span class="mentor-status-title">Faculty Mentor</span>
+              <span class="mentor-status-sub">Ms. Vishakha Rani &bull; CSE (IoT)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Academic Info Widget -->
+        <div class="sidebar-widget">
+          <h3>
+            <svg class="svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            Academic Details
+          </h3>
+          <ul class="spec-list">
+            <li>
+              <span class="spec-label">College</span>
+              <span class="spec-val"><strong>NIET</strong> Greater Noida</span>
+            </li>
+            <li>
+              <span class="spec-label">Branch</span>
+              <span class="spec-val">B.Tech CSE (IoT)</span>
+            </li>
+            <li>
+              <span class="spec-label">Course</span>
+              <span class="spec-val"><code class="academic-code">DCSE0152</code> Web Designing</span>
+            </li>
+            <li>
+              <span class="spec-label">Cohort</span>
+              <span class="spec-val"><strong>Group 08</strong> (2026-27)</span>
+            </li>
+            <li>
+              <span class="spec-label">Academic Year</span>
+              <span class="spec-val">2026-27</span>
+            </li>
+            <li>
+              <span class="spec-label">Viva Status</span>
+              <span class="spec-val spec-grade" style="color:var(--accent);">Ongoing</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Tech Stack Widget -->
+        <div class="sidebar-widget">
+          <h3>
+            <svg class="svg-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="16 18 22 12 16 6"></polyline>
+              <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+            Technologies Used
+          </h3>
+          <div class="tech-pills-wrap">
+            <span class="tech-pill">HTML5 Semantic</span>
+            <span class="tech-pill">CSS3 Design Tokens</span>
+            <span class="tech-pill">Vanilla JavaScript ES6</span>
+            <span class="tech-pill">Web Audio API</span>
+            <span class="tech-pill">Flywheel Inertia Physics</span>
+            <span class="tech-pill">Responsive Design</span>
+            <span class="tech-pill">LocalStorage API</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Compact 3D Origami-Folded Footer -->
+  <footer class="site-footer origami-footer" id="origamiFooter">
+    <div class="origami-shell">
+      <div class="origami-bar">
+        <div class="origami-brand-mini">
+          <span class="origami-crease-mark" aria-hidden="true"></span>
+          <span class="origami-title"><strong>Student Project Showcase</strong> &bull; Group 08</span>
+        </div>
+
+        <div class="origami-flaps" role="tablist" aria-label="Footer Information Flaps">
+          <button type="button" class="origami-flap-btn" data-flap="about" aria-expanded="false">
+            <span>About &amp; Team</span>
+            <svg class="svg-icon flap-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+
+          <button type="button" class="origami-flap-btn" data-flap="links" aria-expanded="false">
+            <span>Quick Links</span>
+            <svg class="svg-icon flap-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+
+          <button type="button" class="origami-flap-btn" data-flap="college" aria-expanded="false">
+            <span>College Info</span>
+            <svg class="svg-icon flap-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+
+          <button type="button" class="origami-flap-btn origami-unfold-all" data-flap="all" aria-expanded="false" title="Unfold all origami panels">
+            <span>Unfold All</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="origami-stage">
+        <div class="origami-panel" data-panel="about">
+          <div class="origami-panel-inner">
+            <div class="origami-panel-tag">01 / Project &amp; Team</div>
+            <p class="origami-desc">
+              A Web Designing (DCSE0152) Capstone Project developed by Group 08 students, Department of Computer Science &amp; Engineering (IoT), NIET Greater Noida.
+            </p>
+            <div class="origami-team-chips">
+              <span class="origami-chip-label">Team:</span>
+              <span class="origami-chip">Ashish Ranjan</span>
+              <span class="origami-chip">Ashish Prajapati</span>
+              <span class="origami-chip">Arunima Bhardwaj</span>
+              <span class="origami-chip">Aryan</span>
+              <span class="origami-chip">Ashmit Tiwari</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="origami-panel" data-panel="links">
+          <div class="origami-panel-inner">
+            <div class="origami-panel-tag">02 / Quick Links</div>
+            <ul class="origami-links-row">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="projects.html">Project Directory</a></li>
+              <li><a href="project-details.html">Case Study &amp; Rubric</a></li>
+              <li><a href="gallery.html">Circuit Schematics</a></li>
+              <li><a href="contact.html">Submit Project</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="origami-panel" data-panel="college">
+          <div class="origami-panel-inner">
+            <div class="origami-panel-tag">03 / College Information</div>
+            <div class="origami-meta-grid">
+              <div class="origami-meta-cell">
+                <span>Course</span>
+                <strong>DCSE0152 (Web Designing)</strong>
+              </div>
+              <div class="origami-meta-cell">
+                <span>Faculty Mentor</span>
+                <strong>Ms. Vishakha Rani</strong>
+              </div>
+              <div class="origami-meta-cell">
+                <span>Institution</span>
+                <strong>Noida Institute of Engineering &amp; Technology, Knowledge Park II, Greater Noida</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="origami-bottom-strip">
+        <span>&copy; 2026-27 Student Project Showcase &bull; Group 08 Capstone Team</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/project-details.js"></script>
+</body>
+</html>
