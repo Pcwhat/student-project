@@ -577,7 +577,7 @@ document.addEventListener("DOMContentLoaded", function () {
         groupNo: group || "Group - 08",
         projectTitle: title,
         projectDomain: domain,
-        repoUrl: repo || "https://github.com/niet-iot-group08",
+        repoUrl: repo || "https://github.com/Pcwhat/student-project",
         demoUrl: demo || "",
         tags: selectedTags.slice(),
         projectAbstract: abstractText,
